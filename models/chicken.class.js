@@ -19,13 +19,11 @@ class Chicken extends MovableObject {
     }
 
     animate() {
-        this.moveLeft();
         setInterval(() => {
-            let i = this.currentImage % this.IMAGES_WALKING.length; //Übersetzung: let i = 0 % 5; % bedeutet math. Rest
-            //für i heißt das 0, 1, 2, 3, 4, 5 und dann 5 / 5 = 0, da  Ergebnis 1 mit Rest 0 
-            let path = this.IMAGES_WALKING[i];
-            this.img = this.imageCache[path];
-            this.currentImage++;
+            this.moveLeft();
+        }, 1000 / 60);
+        setInterval(() => {
+            this.playAnimation(this.IMAGES_WALKING);
             this.chicken_sound.play();
         }, 200);
     }
