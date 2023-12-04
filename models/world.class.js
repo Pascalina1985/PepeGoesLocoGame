@@ -1,42 +1,11 @@
 class World {
     character = new Character(); //Variablen in Klassen ohne let
-    enemies = [ //Variablen in Klassen ohne let
-        new Chicken(),
-        new Chicken(),
-        new Chicken(),
-    ];
+    level = level1;
 
     canvas;
     ctx;
     camera_x = 0;
     keyboard;
-    clouds = [
-        new Cloud()
-    ];
-    backgroundObjects = [
-        new BackgroundObject('img/5_background/layers/air.png', -719),
-        new BackgroundObject('img/5_background/layers/3_third_layer/2.png', -719),
-        new BackgroundObject('img/5_background/layers/2_second_layer/2.png', -719),
-        new BackgroundObject('img/5_background/layers/1_first_layer/2.png', -719),
-
-        new BackgroundObject('img/5_background/layers/air.png', 0),
-        new BackgroundObject('img/5_background/layers/3_third_layer/1.png', 0), //nur x Koordinate
-        new BackgroundObject('img/5_background/layers/2_second_layer/1.png', 0),
-        new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 0),
-        new BackgroundObject('img/5_background/layers/air.png', 719),
-        new BackgroundObject('img/5_background/layers/3_third_layer/2.png', 719),
-        new BackgroundObject('img/5_background/layers/2_second_layer/2.png', 719),
-        new BackgroundObject('img/5_background/layers/1_first_layer/2.png', 719),
-
-        new BackgroundObject('img/5_background/layers/air.png', 719 * 2),
-        new BackgroundObject('img/5_background/layers/3_third_layer/1.png', 719 * 2), //nur x Koordinate
-        new BackgroundObject('img/5_background/layers/2_second_layer/1.png', 719 * 2),
-        new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 719 * 2),
-        new BackgroundObject('img/5_background/layers/air.png', 719 * 3),
-        new BackgroundObject('img/5_background/layers/3_third_layer/2.png', 719 * 3),
-        new BackgroundObject('img/5_background/layers/2_second_layer/2.png', 719 * 3),
-        new BackgroundObject('img/5_background/layers/1_first_layer/2.png', 719 * 3)
-    ];
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d'); //nur ctx kann auf canvas gemalt werden
         this.canvas = canvas;
@@ -53,10 +22,10 @@ class World {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0); //translate als Funktion verschiebt etwas in Abhängigkeit einer Variable
 
-        this.addObjectsToMap(this.backgroundObjects);
+        this.addObjectsToMap(this.level.backgroundObjects);
         this.addToMap(this.character);
-        this.addObjectsToMap(this.enemies);
-        this.addObjectsToMap(this.clouds);
+        this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.clouds);
 
         this.ctx.translate(-this.camera_x, 0);
         let self = this;
