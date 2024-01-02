@@ -1,9 +1,44 @@
+@font-face {
+    font-family: 'Zabars';
+    src: url('fonts/Zabars.ttf') format('truetype');
+    /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+}
+
 body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-image: url('img/desert.png');
+    font-family: 'Zabars', Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    font-size: 64px;
+    display: flex;
+    justify-content: center;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 canvas {
     background-color: black;
+}
+
+#fullscreen {
+    position: relative;
+}
+
+.fullcreen-button {
+    width: 300px;
+    background-color: rgb(255, 150, 0);
+    border: none;
+    color: white;
+    border-radius: 10px;
+}
+
+.fullcreen-button:hover {
+    cursor: pointer;
+}
+
+.exit-fullscreen-button {
+    margin-top: 8px;
 }
