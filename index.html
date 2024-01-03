@@ -23,13 +23,36 @@
     <script src="js/game.js"></script>
 </head>
 
-<body onload="init()">
+<body>
     <div id="fullscreen">
         <h1>El pollo loco</h1>
-        <canvas id="canvas" width="720" height="480"></canvas>
+        <div id="startScreen">
+            <img id="startScreenID" onclick="startGame()" class="startScreen" src="img/9_intro_outro_screens/start/startscreen_1.png">
+            <canvas id="canvas" width="720" height="480"></canvas>
+        </div>
     </div>
     <button onclick="fullscreen()" class="fullcreen-button">Fullscreen</button>
     <button onclick="closeFullscreen()" class="fullcreen-button exit-fullscreen-button">Exit Fullscreen</button>
+    <div class="guide">
+        <div class="directionContainer">
+            <img src="img/left.png" class="directionKeys"><span>left</span>
+        </div>
+        <div class="directionContainer">
+            <img src="img/right.png" class="directionKeys"><span>right</span>
+        </div>
+        <div class="directionContainer">
+            <img src="img/up.png" class="directionKeys"><span>up</span>
+        </div>
+        <div class="directionContainer">
+            <img src="img/down.png" class="directionKeys"><span>down</span>
+        </div>
+        <div class="directionContainer">
+            <img src="img/space.png" class="directionKeys"><span>jump</span>
+        </div>
+        <div class="directionContainer">
+            <img src="img/d.png" class="directionKeys"><span>throw bottle</span>
+        </div>
+    </div>
 </body>
 
 </html>

@@ -35,3 +35,8 @@ function closeFullscreen() {
         fullscreenDiv.msExitFullscreen();
     }
 }
+
+function startGame() {
+    document.getElementById('startScreenID').style.visibility = 'hidden';
+    init();
+}
