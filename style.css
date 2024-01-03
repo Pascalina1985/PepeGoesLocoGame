@@ -81,3 +81,23 @@ canvas {
 .directionContainer span {
     font-size: 24px;
 }
+
+.startGameButton {
+    position: absolute;
+    z-index: 8;
+    margin-left: 64px;
+    margin-top: 22px;
+    font-family: 'Zabars', Arial, Helvetica, sans-serif;
+    width: 150px;
+    height: 100px;
+    font-size: 24px;
+    border-radius: 50%;
+    border: none;
+    background-color: rgb(255, 168, 0);
+}
+
+.startGameButton:hover {
+    cursor: pointer;
+    background-color: rgb(165, 111, 4);
+    color: white;
+}
