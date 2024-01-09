@@ -41,6 +41,9 @@ class Character extends MovableObject {
     world;
 
     walking_sound = new Audio('audio/walking.mp3');
+    hurt_sound = new Audio('audio/hurt.mp3');
+    dead_sound = new Audio('audio/dead.mp3');
+    chicken_sound = new Audio('audio/chicken2.mp3');
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png'); // super ruft Funktion des Mutterobjekts auf
@@ -72,9 +75,18 @@ class Character extends MovableObject {
         }, 1000 / 60);
 
         setInterval(() => {
+            this.hurt_sound.pause();
+            this.dead_sound.pause();
+            this.chicken_sound.pause();
             if (this.isDead()) {
+                this.dead_sound.play();
                 this.playAnimation(this.IMAGES_DEAD);
+                setTimeout(() => {
+                    this.dead_sound.currentTime = 0;
+                }, 2700);
             } else if (this.isHurt()) {
+                this.hurt_sound.play();
+                this.chicken_sound.play();
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
