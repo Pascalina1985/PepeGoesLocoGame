@@ -6,6 +6,8 @@ class World {
     ctx;
     camera_x = 0;
     statusBar = new StatusBar();
+    StatusBarEndboss = new StatusBarEndboss();
+    StatusBarBottle = new StatusBarBottle();
     keyboard;
     throwableObject = [];
 
@@ -53,6 +55,8 @@ class World {
         this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0); //zurück
         this.addToMap(this.statusBar);
+        this.addToMap(this.StatusBarEndboss);
+        this.addToMap(this.StatusBarBottle);
         this.ctx.translate(this.camera_x, 0); //vorwärts
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObject);
