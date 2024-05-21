@@ -10,6 +10,7 @@ class World {
     StatusBarBottle = new StatusBarBottle();
     keyboard;
     throwableObject = [];
+    collectedBottles = []; // PME 21.05.2024
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d'); //nur ctx kann auf canvas gemalt werden
@@ -27,7 +28,7 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
-            this.checkThrowObejects();
+            this.checkThrowObjects();
             this.checkcharacterbottle();
         }, 200);
     }
@@ -42,27 +43,28 @@ class World {
         });
     }
 
+
     checkcharacterbottle() {
         this.level.bottles.forEach((bottle, index) => {
             if (!bottle.collected && this.character.isColliding(bottle)) {
                 bottle.collected = true; // Markiere die Flasche als gesammelt
-                this.StatusBarBottle.setPercentage(this.countCollectedBottles()); // Setze den Prozentsatz basierend auf der Anzahl der gesammelten Flaschen
+                this.collectedBottles.push(bottle); // PME 21.05.2024
+                this.StatusBarBottle.setPercentage(this.collectedBottles.length); //
                 console.log(`Flasche ${index} gesammelt`);
             }
         });
     }
 
-    countCollectedBottles() {
-        return this.level.bottles.filter(bottle => bottle.collected).length;
-    }
 
-
-
-
-    checkThrowObejects() {
-        if (this.keyboard.D) {
+    checkThrowObjects() {
+        if (this.keyboard.D && this.collectedBottles.length > 0) { // Überprüfe, ob Flaschen gesammelt wurden
+            this.collectedBottles.pop(); // Entferne die letzte gesammelte Flasche aus dem Array
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObject.push(bottle);
+            // Aktualisiere den Prozentsatz in der Statusleiste
+            this.StatusBarBottle.setPercentage(this.collectedBottles.length);
+        } else {
+            console.log('Keine Flaschen zum Werfen verfügbar');
         }
     }
 
