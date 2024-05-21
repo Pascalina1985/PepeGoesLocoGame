@@ -2,6 +2,8 @@ class Endboss extends MovableObject {
     height = 400;
     width = 250;
     y = 60;
+    health = 100; // Anfangsenergie des Endbosses
+
 
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
@@ -14,6 +16,12 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/2_alert/G12.png',
     ];
 
+    IMAGE_DAMAGED = [
+        'img/4_enemie_boss_chicken/5_dead/G24.png',
+        'img/4_enemie_boss_chicken/5_dead/G25.png',
+        'img/4_enemie_boss_chicken/5_dead/G26.png'
+    ];
+
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
@@ -24,5 +32,16 @@ class Endboss extends MovableObject {
         setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING);
         }, 200);
+    }
+
+    hit() {
+        this.health -= 100 / 3; // Verringere die Gesundheit des Endbosses
+        console.log('Endboss Gesundheit: ', this.health);
+
+        // if (this.health < 34) {
+        //     this.loadImage(this.IMAGE_DAMAGED[0]);
+        //     this.loadImages(this.IMAGE_DAMAGED);
+        //     this.animate();
+        // }
     }
 }

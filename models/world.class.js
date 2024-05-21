@@ -10,7 +10,8 @@ class World {
     StatusBarBottle = new StatusBarBottle();
     keyboard;
     throwableObject = [];
-    collectedBottles = []; // PME 21.05.2024
+    collectedBottles = [];
+    endboss = new Endboss();
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d'); //nur ctx kann auf canvas gemalt werden
@@ -30,6 +31,7 @@ class World {
             this.checkCollisions();
             this.checkThrowObjects();
             this.checkcharacterbottle();
+            this.checkBottleEndbossCollision(); // PME 21.05.2024
         }, 200);
     }
 
@@ -48,7 +50,7 @@ class World {
         this.level.bottles.forEach((bottle, index) => {
             if (!bottle.collected && this.character.isColliding(bottle)) {
                 bottle.collected = true; // Markiere die Flasche als gesammelt
-                this.collectedBottles.push(bottle); // PME 21.05.2024
+                this.collectedBottles.push(bottle);
                 this.StatusBarBottle.setPercentage(this.collectedBottles.length); //
                 console.log(`Flasche ${index} gesammelt`);
             }
@@ -67,6 +69,18 @@ class World {
             console.log('Keine Flaschen zum Werfen verfügbar');
         }
     }
+
+
+    checkBottleEndbossCollision() {
+        this.throwableObject.forEach((bottle, index) => {
+            if (bottle.isColliding(this.endboss)) {
+                this.endboss.hit();
+                this.StatusBarEndboss.setPercentage(this.endboss.health);
+                console.log('Endboss getroffen');
+            }
+        });
+    }
+
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
