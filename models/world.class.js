@@ -28,6 +28,7 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObejects();
+            this.checkcharacterbottle();
         }, 200);
     }
 
@@ -40,6 +41,23 @@ class World {
             }
         });
     }
+
+    checkcharacterbottle() {
+        this.level.bottles.forEach((bottle, index) => {
+            if (!bottle.collected && this.character.isColliding(bottle)) {
+                bottle.collected = true; // Markiere die Flasche als gesammelt
+                this.StatusBarBottle.setPercentage(this.countCollectedBottles()); // Setze den Prozentsatz basierend auf der Anzahl der gesammelten Flaschen
+                console.log(`Flasche ${index} gesammelt`);
+            }
+        });
+    }
+
+    countCollectedBottles() {
+        return this.level.bottles.filter(bottle => bottle.collected).length;
+    }
+
+
+
 
     checkThrowObejects() {
         if (this.keyboard.D) {

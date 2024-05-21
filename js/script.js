@@ -77,6 +77,7 @@ function startGame() {
             new Bottle(),
             new Bottle(),
             new Bottle(),
+            new Bottle(),
             new Bottle()
         ]
     );
