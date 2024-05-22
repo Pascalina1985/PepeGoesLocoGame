@@ -11,7 +11,7 @@ class World {
     keyboard;
     throwableObject = [];
     collectedBottles = [];
-    endboss = new Endboss();
+    endboss;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d'); //nur ctx kann auf canvas gemalt werden
@@ -19,11 +19,16 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
+        this.endboss = this.getEndboss();
         this.run();
     }
 
     setWorld() {
         this.character.world = this;
+    }
+
+    getEndboss() {
+        return this.level.enemies.find(enemy => enemy instanceof Endboss);
     }
 
     run() {
@@ -72,13 +77,15 @@ class World {
 
 
     checkBottleEndbossCollision() {
-        this.throwableObject.forEach((bottle, index) => {
-            if (bottle.isColliding(this.endboss)) {
-                this.endboss.hit();
-                this.StatusBarEndboss.setPercentage(this.endboss.health);
-                console.log('Endboss getroffen');
-            }
-        });
+        if (this.endboss) {
+            this.throwableObject.forEach((bottle, index) => {
+                if (bottle.isColliding(this.endboss)) {
+                    this.endboss.hitbottle();
+                    this.StatusBarEndboss.setPercentage(this.endboss.health);
+                    console.log('Endboss getroffen');
+                }
+            });
+        }
     }
 
 
