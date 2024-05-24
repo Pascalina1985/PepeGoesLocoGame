@@ -8,9 +8,11 @@ class World {
     statusBar = new StatusBar();
     StatusBarEndboss = new StatusBarEndboss();
     StatusBarBottle = new StatusBarBottle();
+    StatusBarCoin = new StatusBarCoin();
     keyboard;
     throwableObject = [];
     collectedBottles = [];
+    hitenemies = [];
     endboss;
 
     constructor(canvas, keyboard) {
@@ -41,27 +43,36 @@ class World {
     }
 
     checkCollisions() {
-        this.level.enemies.forEach(enemy => { // Wird jede Sekunde(bei 1000) für alle Gegner ausgeführt
+        this.level.enemies.forEach((enemy, index) => {
             if (this.character.isColliding(enemy)) {
-                this.character.hit();
-                this.statusBar.setPercentage(this.character.energy);
-                console.log('Energie ist ', this.character.energy);
+                if (this.character.y + this.character.height < enemy.y + enemy.height &&
+                    this.character.x + this.character.width > enemy.x &&
+                    this.character.x < enemy.x + enemy.width) {
+                    this.hitenemies.push(enemy);
+                } else {
+                    this.character.hit();
+                    this.statusBar.setPercentage(this.character.energy);
+                    console.log('Energie ist ', this.character.energy);
+                }
             }
         });
+        this.level.enemies = this.level.enemies.filter(enemy => !this.hitenemies.includes(enemy));
+        this.hitenemies = [];
     }
 
 
     checkcharacterbottle() {
-        this.level.bottles.forEach((bottle, index) => {
+        this.level.bottles = this.level.bottles.filter((bottle, index) => {
             if (!bottle.collected && this.character.isColliding(bottle)) {
                 bottle.collected = true; // Markiere die Flasche als gesammelt
                 this.collectedBottles.push(bottle);
                 this.StatusBarBottle.setPercentage(this.collectedBottles.length); //
                 console.log(`Flasche ${index} gesammelt`);
+                return false; // Entferne die gesammelte Flasche aus dem Array
             }
+            return true; // Behalte die ungesammelten Flaschen im Array
         });
     }
-
 
     checkThrowObjects() {
         if (this.keyboard.D && this.collectedBottles.length > 0) { // Überprüfe, ob Flaschen gesammelt wurden
@@ -98,6 +109,7 @@ class World {
         this.addToMap(this.statusBar);
         this.addToMap(this.StatusBarEndboss);
         this.addToMap(this.StatusBarBottle);
+        this.addToMap(this.StatusBarCoin);
         this.ctx.translate(this.camera_x, 0); //vorwärts
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.enemies);
