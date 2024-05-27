@@ -12,6 +12,7 @@ class World {
     keyboard;
     throwableObject = [];
     collectedBottles = [];
+    collectedCoins = [];
     hitenemies = [];
     endboss;
 
@@ -39,6 +40,7 @@ class World {
             this.checkThrowObjects();
             this.checkcharacterbottle();
             this.checkBottleEndbossCollision(); // PME 21.05.2024
+            this.checkcharaktercoin(); // PME 27.05.2024
         }, 200);
     }
 
@@ -72,6 +74,22 @@ class World {
             }
             return true; // Behalte die ungesammelten Flaschen im Array
         });
+    }
+
+
+    checkcharaktercoin() {
+        const totalCoins = 8;
+        this.level.coins = this.level.coins.filter((coin, index) => {
+            if (!coin.collected && this.character.isColliding(coin)) {
+                coin.collected = true;
+                this.collectedCoins.push(coin);
+                const percentage = (this.collectedCoins.length / totalCoins) * 100;
+                this.StatusBarCoin.setPercentage(percentage);
+                console.log(`Coins ${index} gesammelt`);
+                return false;
+            }
+            return true;
+        })
     }
 
     checkThrowObjects() {

@@ -23,7 +23,7 @@ class Endboss extends MovableObject {
     ];
 
     IMAGE_END = [
-        'img/9_intro_outro_screens/game_over/game over!.png'
+        'img/9_intro_outro_screens/game_over/win.png'
     ];
 
     bomb_sound = new Audio('audio/bomb.mp3');
@@ -54,10 +54,11 @@ class Endboss extends MovableObject {
 
     showEndScreen() {
         clearInterval(this.interval);
-        this.loadImage(this.IMAGE_END[0]); // Laden Sie das Endbild
+        this.loadImage(this.IMAGE_END[0]);
+        setTimeout(() => {
+            location.reload();
+        }, 3000);
     }
-
-
 
 
     hitbottle() {

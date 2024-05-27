@@ -83,6 +83,7 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_DEAD);
                 setTimeout(() => {
                     this.dead_sound.currentTime = 0;
+                    location.reload();
                 }, 2700);
             } else if (this.isHurt()) {
                 this.hurt_sound.play();
