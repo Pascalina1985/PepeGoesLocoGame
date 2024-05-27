@@ -26,7 +26,7 @@ class Endboss extends MovableObject {
         'img/9_intro_outro_screens/game_over/win.png'
     ];
 
-    bomb_sound = new Audio('audio/bomb.mp3');
+    bomb_sound = new Audio('audio/winnersound.mp3');
 
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);

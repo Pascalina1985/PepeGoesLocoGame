@@ -2,6 +2,7 @@ function fullscreen() {
     openFullscreen();
 }
 
+
 function openFullscreen() {
     let fullscreenDiv = document.getElementById('fullscreen');
     let canvas = fullscreenDiv.querySelector('canvas');
@@ -47,7 +48,11 @@ function startGame() {
             new Chicken(),
             new Chicken(),
             new Chicken(),
-            new Endboss()
+            new Endboss(),
+            new ChickenSmall(),
+            new ChickenSmall(),
+            new ChickenSmall(),
+            new ChickenSmall()
         ], [
             new Cloud()
         ], [

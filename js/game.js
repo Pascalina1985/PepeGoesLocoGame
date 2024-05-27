@@ -1,10 +1,12 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+game_sound = new Audio('audio/soundwholegame.mp3');
 
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
+    this.game_sound.play();
     //console.log('my character is', world['character']); //oder world.character oder world['character']
 }
 

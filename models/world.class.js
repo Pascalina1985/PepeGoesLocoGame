@@ -15,6 +15,9 @@ class World {
     collectedCoins = [];
     hitenemies = [];
     endboss;
+    coin_sound = new Audio('audio/coin.mp3');
+    bottle_sound = new Audio('audio/bottlecollected2.mp3');
+    yeah_sound = new Audio('audio/shoutingyeah.mp3');
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d'); //nur ctx kann auf canvas gemalt werden
@@ -50,14 +53,37 @@ class World {
                 if (this.character.y + this.character.height < enemy.y + enemy.height &&
                     this.character.x + this.character.width > enemy.x &&
                     this.character.x < enemy.x + enemy.width) {
-                    this.hitenemies.push(enemy);
+                    if (enemy instanceof Chicken || enemy instanceof ChickenSmall) {
+                        this.handleJumpingOnEnemy(enemy);
+                    }
                 } else {
-                    this.character.hit();
-                    this.statusBar.setPercentage(this.character.energy);
-                    console.log('Energie ist ', this.character.energy);
+                    if (!this.isJumpingOnEnemy) {
+                        this.handleNormalCollision();
+                    }
                 }
             }
         });
+        this.removeHitEnemies();
+    }
+
+
+    handleJumpingOnEnemy(enemy) {
+        enemy.die(); // Gegner entfernen
+        setTimeout(() => {
+            this.hitenemies.push(enemy); // Gegner zum Entfernen markieren
+            this.removeHitEnemies(); // Gegner entfernen
+        }, 300); // Zeit für die Todesanimation
+    }
+
+
+    handleNormalCollision() {
+        this.character.hit();
+        this.statusBar.setPercentage(this.character.energy);
+        console.log('Energie ist ', this.character.energy);
+    }
+
+
+    removeHitEnemies() {
         this.level.enemies = this.level.enemies.filter(enemy => !this.hitenemies.includes(enemy));
         this.hitenemies = [];
     }
@@ -66,6 +92,7 @@ class World {
     checkcharacterbottle() {
         this.level.bottles = this.level.bottles.filter((bottle, index) => {
             if (!bottle.collected && this.character.isColliding(bottle)) {
+                this.bottle_sound.play();
                 bottle.collected = true; // Markiere die Flasche als gesammelt
                 this.collectedBottles.push(bottle);
                 this.StatusBarBottle.setPercentage(this.collectedBottles.length); //
@@ -81,6 +108,7 @@ class World {
         const totalCoins = 8;
         this.level.coins = this.level.coins.filter((coin, index) => {
             if (!coin.collected && this.character.isColliding(coin)) {
+                this.coin_sound.play();
                 coin.collected = true;
                 this.collectedCoins.push(coin);
                 const percentage = (this.collectedCoins.length / totalCoins) * 100;
@@ -94,6 +122,7 @@ class World {
 
     checkThrowObjects() {
         if (this.keyboard.D && this.collectedBottles.length > 0) { // Überprüfe, ob Flaschen gesammelt wurden
+            this.yeah_sound.play();
             this.collectedBottles.pop(); // Entferne die letzte gesammelte Flasche aus dem Array
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObject.push(bottle);
