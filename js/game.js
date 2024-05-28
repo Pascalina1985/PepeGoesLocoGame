@@ -1,7 +1,8 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
-game_sound = new Audio('audio/soundwholegame.mp3');
+game_sound = new Audio('audio/soundofgame.mp3');
+game_sound.volume = 0.2;
 
 function init() {
     canvas = document.getElementById('canvas');

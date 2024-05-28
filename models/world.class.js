@@ -18,6 +18,7 @@ class World {
     coin_sound = new Audio('audio/coin.mp3');
     bottle_sound = new Audio('audio/bottlecollected2.mp3');
     yeah_sound = new Audio('audio/shoutingyeah.mp3');
+    splash_sound = new Audio('audio/splash.mp3');
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d'); //nur ctx kann auf canvas gemalt werden
@@ -44,6 +45,7 @@ class World {
             this.checkcharacterbottle();
             this.checkBottleEndbossCollision(); // PME 21.05.2024
             this.checkcharaktercoin(); // PME 27.05.2024
+            this.checkCollisionsEndbossCharacter();
         }, 200);
     }
 
@@ -55,6 +57,7 @@ class World {
                     this.character.x < enemy.x + enemy.width) {
                     if (enemy instanceof Chicken || enemy instanceof ChickenSmall) {
                         this.handleJumpingOnEnemy(enemy);
+                        this.splash_sound.play();
                     }
                 } else {
                     if (!this.isJumpingOnEnemy) {
@@ -64,6 +67,21 @@ class World {
             }
         });
         this.removeHitEnemies();
+    }
+
+    checkCollisionsEndbossCharacter() {
+        this.level.enemies.forEach((enemy, index) => {
+            if (this.character.isColliding(enemy)) {
+                if (this.character.y + this.character.height < enemy.y + enemy.height &&
+                    this.character.x + this.character.width > enemy.x &&
+                    this.character.x < enemy.x + enemy.width) {
+                    if (enemy instanceof Endboss) {
+                        this.character.hit();
+                        this.statusBar.setPercentage(this.character.energy);
+                    }
+                }
+            }
+        });
     }
 
 

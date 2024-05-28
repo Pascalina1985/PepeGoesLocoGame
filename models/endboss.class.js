@@ -34,20 +34,28 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGE_DAMAGED);
         this.loadImages(this.IMAGE_END);
         this.x = 2500;
+        this.speed = 3.5;
         this.animate();
     }
 
 
     animate() {
-        this.interval = setInterval(() => {
+        this.movementInterval = setInterval(() => {
+            if (this.health >= 35) {
+                this.moveLeft();
+                this.playAnimation(this.IMAGES_WALKING);
+            }
+        }, 100);
+
+        this.animationInterval = setInterval(() => {
             if (this.health < 35) {
                 this.playAnimation(this.IMAGE_DAMAGED);
                 this.bomb_sound.play();
+                clearInterval(this.movementInterval);
+                clearInterval(this.animationInterval);
                 setTimeout(() => {
                     this.showEndScreen();
                 }, 3000);
-            } else {
-                this.playAnimation(this.IMAGES_WALKING);
             }
         }, 200);
     }
