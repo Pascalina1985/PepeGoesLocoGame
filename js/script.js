@@ -2,6 +2,17 @@ function fullscreen() {
     openFullscreen();
 }
 
+function checkOrientation() {
+    if (window.innerHeight > window.innerWidth) {
+        document.getElementById('rotate-device').style.display = 'block';
+    } else {
+        document.getElementById('rotate-device').style.display = 'none';
+    }
+}
+
+window.addEventListener('resize', checkOrientation);
+window.addEventListener('load', checkOrientation);
+
 
 function openFullscreen() {
     let fullscreenDiv = document.getElementById('fullscreen');
