@@ -50,7 +50,7 @@ class World {
     }
 
     checkCollisions() {
-        this.level.enemies.forEach((enemy, index) => {
+        this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 if (this.character.y + this.character.height < enemy.y + enemy.height &&
                     this.character.x + this.character.width > enemy.x &&
@@ -58,6 +58,7 @@ class World {
                     if (enemy instanceof Chicken || enemy instanceof ChickenSmall) {
                         this.handleJumpingOnEnemy(enemy);
                         this.splash_sound.play();
+                        clearInterval(this.character.IMAGES_HURT);
                     }
                 } else {
                     if (!this.isJumpingOnEnemy) {
@@ -70,7 +71,7 @@ class World {
     }
 
     checkCollisionsEndbossCharacter() {
-        this.level.enemies.forEach((enemy, index) => {
+        this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 if (this.character.y + this.character.height < enemy.y + enemy.height &&
                     this.character.x + this.character.width > enemy.x &&
@@ -90,7 +91,7 @@ class World {
         setTimeout(() => {
             this.hitenemies.push(enemy); // Gegner zum Entfernen markieren
             this.removeHitEnemies(); // Gegner entfernen
-        }, 300); // Zeit für die Todesanimation
+        }, 100); // Zeit für die Todesanimation
     }
 
 

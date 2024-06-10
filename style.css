@@ -164,3 +164,8 @@ canvas {
     background-color: rgb(165, 111, 4);
     color: white;
 }
+
+#rotate-device {
+    font-size: 34px;
+    background-color: antiquewhite;
+}
