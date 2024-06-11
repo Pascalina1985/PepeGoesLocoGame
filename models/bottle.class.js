@@ -17,14 +17,14 @@ class Bottle extends MovableObject {
      * 
      * @type {number}
      */
-    height = 40;
+    height = 60;
 
     /**
      * Die Breite der Flasche.
      * 
      * @type {number}
      */
-    width = 40;
+    width = 60;
 
     /**
      * Gibt an, ob die Flasche bereits eingesammelt wurde oder nicht.

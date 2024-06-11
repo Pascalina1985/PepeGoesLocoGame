@@ -271,31 +271,62 @@ class World {
      * Überprüft, ob der Charakter eine Flasche wirft und aktualisiert die Statusleiste entsprechend.
      */
     checkThrowObjects() {
-        if (this.keyboard.D && this.collectedBottles.length > 0) { // Überprüfe, ob Flaschen gesammelt wurden
+        if (this.keyboard.D && this.collectedBottles.length > 0) {
             this.yeah_sound.play();
-            this.collectedBottles.pop(); // Entferne die letzte gesammelte Flasche aus dem Array
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+            this.collectedBottles.pop();
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, !this.character.otherDirection);
             this.throwableObject.push(bottle);
-            // Aktualisiere den Prozentsatz in der Statusleiste
             this.StatusBarBottle.setPercentage(this.collectedBottles.length);
+
+            if (this.collectedBottles.length === 0) {
+
+                setTimeout(() => {
+                    location.reload();
+                }, 1500);
+            }
         } else {
 
         }
     }
 
+
     /**
      * Überprüft, ob eine geworfene Flasche den Endboss trifft und aktualisiert die Statusleiste entsprechend.
+     */
+    /**
+     * Prüft die Kollisionen zwischen geworfenen Flaschen und dem Endboss.
+     */
+    /**
+     * Überprüft, ob eine Flasche mit dem Endboss kollidiert und führt entsprechende Aktionen aus.
      */
     checkBottleEndbossCollision() {
         if (this.endboss) {
             this.throwableObject.forEach((bottle, index) => {
                 if (bottle.isColliding(this.endboss)) {
-                    this.endboss.hitbottle();
-                    this.StatusBarEndboss.setPercentage(this.endboss.health);
+                    // Flasche trifft den Endboss
+                    bottle.splash(); // Starte die Splash-Animation der Flasche
+
+                    // Starte die Damage-Animation des Endbosses mit einer Verzögerung
+                    setTimeout(() => {
+                        this.endboss.hitbottle(); // Verletze den Endboss
+                        this.StatusBarEndboss.setPercentage(this.endboss.health);
+                    }, 200); // Passen Sie die Verzögerung nach Bedarf an
                 }
             });
         }
     }
+
+    hitbottle() {
+        this.health -= 33;
+        // Starte die Damage-Animation des Endbosses
+        this.playAnimation(this.IMAGE_DAMAGED);
+
+        if (this.health < 0) {
+            this.health = 0;
+        }
+    }
+
+
 
     /**
      * Zeichnet den Spielbildschirm, aktualisiert die Objekte und führt Animationen durch.

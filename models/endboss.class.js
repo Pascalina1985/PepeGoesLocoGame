@@ -29,6 +29,17 @@ class Endboss extends MovableObject {
         'img/9_intro_outro_screens/game_over/win.png'
     ];
 
+
+    IMAGE_SPLASH = [
+        'img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png',
+        'img/6_salsa_bottle/bottle_rotation/bottle_splash/2_bottle_splash.png',
+        'img/6_salsa_bottle/bottle_rotation/bottle_splash/3_bottle_splash.png',
+        'img/6_salsa_bottle/bottle_rotation/bottle_splash/4_bottle_splash.png',
+        'img/6_salsa_bottle/bottle_rotation/bottle_splash/5_bottle_splash.png',
+        'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png'
+    ];
+
+
     bomb_sound = new Audio('audio/winnersound.mp3');
 
     /**
@@ -39,6 +50,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGE_DAMAGED);
         this.loadImages(this.IMAGE_END);
+        this.loadImages(this.IMAGE_SPLASH);
         this.x = 2500;
         this.speed = 3.5;
         this.animate();
@@ -82,8 +94,14 @@ class Endboss extends MovableObject {
     /**
      * Reduziert die Gesundheit des Endbosses, wenn er von einer Flasche getroffen wird.
      */
+    /**
+     * Reduziert die Gesundheit des Endbosses, wenn er von einer Flasche getroffen wird.
+     */
     hitbottle() {
         this.health -= 33;
+        // Starte die Damage-Animation des Endbosses
+        this.playAnimation(this.IMAGE_DAMAGED);
+
         if (this.health < 0) {
             this.health = 0;
         }

@@ -5,6 +5,12 @@
 let canvas;
 
 /**
+ * Der Sound des Spiels.
+ * @type {HTMLAudioElement}
+ */
+let game_sound;
+
+/**
  * Die Welt des Spiels.
  * @type {World}
  */
@@ -17,12 +23,6 @@ let world;
 let keyboard = new Keyboard();
 
 /**
- * Der Sound des Spiels.
- * @type {HTMLAudioElement}
- */
-let game_sound = new Audio('audio/soundofgame.mp3');
-
-/**
  * Initialisiert das Spiel.
  * 
  * @function init
@@ -30,6 +30,7 @@ let game_sound = new Audio('audio/soundofgame.mp3');
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
+    game_sound = new Audio('audio/soundofgame.mp3'); // game_sound global zuweisen
     game_sound.play();
 }
 
@@ -94,3 +95,10 @@ window.addEventListener("keyup", (event) => {
             break;
     }
 });
+
+/**
+ * Pausiert alle Sounds im Spiel.
+ */
+function pauseSounds() {
+    game_sound.pause();
+}

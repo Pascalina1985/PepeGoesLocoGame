@@ -3,9 +3,9 @@
  * @extends MovableObject
  */
 class Coin extends MovableObject {
-    y = 150;
-    height = 40;
-    width = 40;
+    y = 100;
+    height = 70;
+    width = 70;
     collected = false;
 
     /**
