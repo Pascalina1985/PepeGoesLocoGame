@@ -1,4 +1,12 @@
+/**
+ * Repräsentiert eine generische Statusleiste.
+ * Erweitert die Funktionalität von DrawableObject um die Anzeige des Status.
+ */
 class StatusBar extends DrawableObject {
+    /**
+     * Die Liste der Bildpfade für verschiedene Statuszustände.
+     * @type {Array<string>}
+     */
     IMAGES_HEALTH = [
         'img/7_statusbars/1_statusbar/2_statusbar_health/blue/0.png',
         'img/7_statusbars/1_statusbar/2_statusbar_health/blue/20.png',
@@ -8,7 +16,16 @@ class StatusBar extends DrawableObject {
         'img/7_statusbars/1_statusbar/2_statusbar_health/blue/100.png'
     ];
 
+    /**
+     * Der Prozentsatz des Status.
+     * @type {number}
+     * @default 100
+     */
     percentage = 100;
+
+    /**
+     * Erzeugt eine neue StatusBar-Instanz.
+     */
     constructor() {
         super();
         this.loadImages(this.IMAGES_HEALTH);
@@ -19,12 +36,20 @@ class StatusBar extends DrawableObject {
         this.setPercentage(100);
     }
 
+    /**
+     * Setzt den Prozentsatz des Status.
+     * @param {number} percentage - Der Prozentsatz des Status.
+     */
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES_HEALTH[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
 
+    /**
+     * Bestimmt den Index des Bildpfads basierend auf dem Prozentsatz des Status.
+     * @returns {number} - Der Index des Bildpfads.
+     */
     resolveImageIndex() {
         if (this.percentage == 100) {
             return 5;

@@ -1,4 +1,12 @@
+/**
+ * Repräsentiert eine Statusleiste für Münzen.
+ * Erweitert die Funktionalität von DrawableObject um die Anzeige des Münzenstatus.
+ */
 class StatusBarCoin extends DrawableObject {
+    /**
+     * Die Liste der Bildpfade für verschiedene Münzenstatus.
+     * @type {Array<string>}
+     */
     IMAGES_COIN = [
         'img/7_statusbars/1_statusbar/1_statusbar_coin/blue/0.png',
         'img/7_statusbars/1_statusbar/1_statusbar_coin/blue/20.png',
@@ -8,7 +16,16 @@ class StatusBarCoin extends DrawableObject {
         'img/7_statusbars/1_statusbar/1_statusbar_coin/blue/100.png'
     ];
 
+    /**
+     * Der Prozentsatz des Münzenstatus.
+     * @type {number}
+     * @default 0
+     */
     percentage = 0;
+
+    /**
+     * Erzeugt eine neue StatusBarCoin-Instanz.
+     */
     constructor() {
         super();
         this.loadImages(this.IMAGES_COIN);
@@ -19,12 +36,20 @@ class StatusBarCoin extends DrawableObject {
         this.setPercentage(0);
     }
 
+    /**
+     * Setzt den Prozentsatz des Münzenstatus.
+     * @param {number} percentage - Der Prozentsatz des Münzenstatus.
+     */
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES_COIN[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
 
+    /**
+     * Bestimmt den Index des Bildpfads basierend auf dem Münzenprozentsatz.
+     * @returns {number} - Der Index des Bildpfads.
+     */
     resolveImageIndex() {
         if (this.percentage >= 100) {
             return 5;

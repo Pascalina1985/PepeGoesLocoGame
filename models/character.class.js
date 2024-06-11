@@ -1,7 +1,36 @@
+/**
+ * Eine Klasse, die einen Charakter im Spiel darstellt.
+ * 
+ * @class Character
+ * @extends MovableObject
+ */
 class Character extends MovableObject {
+    /**
+     * Die Höhe des Charakters.
+     * 
+     * @type {number}
+     */
     height = 250;
+
+    /**
+     * Die y-Koordinate des Charakters.
+     * 
+     * @type {number}
+     */
     y = 80;
+
+    /**
+     * Die Geschwindigkeit des Charakters.
+     * 
+     * @type {number}
+     */
     speed = 10;
+
+    /**
+     * Ein Array mit den Bildpfaden für die Laufanimation des Charakters.
+     * 
+     * @type {string[]}
+     */
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
         'img/2_character_pepe/2_walk/W-22.png',
@@ -10,6 +39,12 @@ class Character extends MovableObject {
         'img/2_character_pepe/2_walk/W-25.png',
         'img/2_character_pepe/2_walk/W-26.png'
     ];
+
+    /**
+     * Ein Array mit den Bildpfaden für die Sprunganimation des Charakters.
+     * 
+     * @type {string[]}
+     */
     IMAGES_JUMPING = [
         'img/2_character_pepe/3_jump/J-31.png',
         'img/2_character_pepe/3_jump/J-32.png',
@@ -22,6 +57,11 @@ class Character extends MovableObject {
         'img/2_character_pepe/3_jump/J-39.png'
     ];
 
+    /**
+     * Ein Array mit den Bildpfaden für die Todesanimation des Charakters.
+     * 
+     * @type {string[]}
+     */
     IMAGES_DEAD = [
         'img/2_character_pepe/5_dead/D-51.png',
         'img/2_character_pepe/5_dead/D-52.png',
@@ -32,21 +72,59 @@ class Character extends MovableObject {
         'img/2_character_pepe/5_dead/D-57.png'
     ];
 
+    /**
+     * Ein Array mit den Bildpfaden für die Verletzungsanimation des Charakters.
+     * 
+     * @type {string[]}
+     */
     IMAGES_HURT = [
         'img/2_character_pepe/4_hurt/H-41.png',
         'img/2_character_pepe/4_hurt/H-42.png',
         'img/2_character_pepe/4_hurt/H-43.png'
     ];
 
+    /**
+     * Die Welt, in der sich der Charakter befindet.
+     * 
+     * @type {World}
+     */
     world;
 
+    /**
+     * Ein Audio-Objekt für den Laufsound des Charakters.
+     * 
+     * @type {Audio}
+     */
     walking_sound = new Audio('audio/walking.mp3');
+
+    /**
+     * Ein Audio-Objekt für den Verletzungssound des Charakters.
+     * 
+     * @type {Audio}
+     */
     hurt_sound = new Audio('audio/hurt.mp3');
+
+    /**
+     * Ein Audio-Objekt für den Todessound des Charakters.
+     * 
+     * @type {Audio}
+     */
     dead_sound = new Audio('audio/dead.mp3');
+
+    /**
+     * Ein Audio-Objekt für den Hühnersound des Charakters.
+     * 
+     * @type {Audio}
+     */
     chicken_sound = new Audio('audio/chicken2.mp3');
 
+    /**
+     * Erzeugt einen neuen Charakter.
+     * 
+     * @constructor
+     */
     constructor() {
-        super().loadImage('img/2_character_pepe/2_walk/W-21.png'); // super ruft Funktion des Mutterobjekts auf
+        super().loadImage('img/2_character_pepe/2_walk/W-21.png');
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_DEAD);
@@ -55,6 +133,23 @@ class Character extends MovableObject {
         this.animate();
     }
 
+
+    /**
+     * Führt die Animation des Charakters aus.
+     * 
+     * Diese Methode startet zwei Intervalle für die Animation des Charakters: 
+     * 
+     * Das erste Intervall wird alle 1/60 Sekunde ausgeführt und überprüft die Tastatureingaben des Benutzers. 
+     * Abhängig von den Tastatureingaben wird der Charakter bewegt, indem entweder die `moveRight()`- oder `moveLeft()`-Methode aufgerufen wird.
+     * Außerdem wird überprüft, ob der Charakter springen soll, und die `jump()`-Methode wird aufgerufen, wenn die Leertaste gedrückt wird und der Charakter nicht bereits in der Luft ist.
+     * Zusätzlich wird die Kamera entsprechend der Position des Charakters aktualisiert.
+     * 
+     * Das zweite Intervall wird alle 50 Millisekunden ausgeführt und überprüft den Zustand des Charakters. 
+     * Wenn der Charakter tot ist, wird eine Todesanimation abgespielt und die Seite nach einer Verzögerung von 2,7 Sekunden neu geladen.
+     * Wenn der Charakter verletzt ist, wird eine Verletzungsanimation abgespielt und der entsprechende Sound abgespielt.
+     * Wenn der Charakter in der Luft ist, wird eine Sprunganimation abgespielt.
+     * Wenn der Charakter auf dem Boden ist und sich nach rechts oder links bewegt, wird eine Laufanimation abgespielt.
+     */
     animate() {
         setInterval(() => {
             this.walking_sound.pause();
@@ -93,14 +188,16 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_JUMPING);
             } else {
                 if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                    //Lauf-Animation
                     this.playAnimation(this.IMAGES_WALKING);
                 }
             }
         }, 50);
     }
 
+    /**
+     * Lässt den Charakter springen, indem die vertikale Geschwindigkeit des Charakters erhöht wird.
+     */
     jump() {
-        this.speedY = 30;
+        this.speedY = 30; // Setzt die vertikale Geschwindigkeit des Charakters auf einen Sprungwert
     }
 }

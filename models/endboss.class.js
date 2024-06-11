@@ -1,9 +1,12 @@
+/**
+ * Repräsentiert den Endboss im Spiel.
+ * @extends MovableObject
+ */
 class Endboss extends MovableObject {
     height = 400;
     width = 250;
     y = 60;
-    health = 100; // Anfangsenergie des Endbosses
-
+    health = 100;
 
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
@@ -28,6 +31,9 @@ class Endboss extends MovableObject {
 
     bomb_sound = new Audio('audio/winnersound.mp3');
 
+    /**
+     * Erzeugt eine neue Instanz des Endbosses.
+     */
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
         this.loadImages(this.IMAGES_WALKING);
@@ -38,7 +44,9 @@ class Endboss extends MovableObject {
         this.animate();
     }
 
-
+    /**
+     * Animiert den Endboss.
+     */
     animate() {
         this.movementInterval = setInterval(() => {
             if (this.health >= 35) {
@@ -60,6 +68,9 @@ class Endboss extends MovableObject {
         }, 200);
     }
 
+    /**
+     * Zeigt den Endbildschirm an.
+     */
     showEndScreen() {
         clearInterval(this.interval);
         this.loadImage(this.IMAGE_END[0]);
@@ -68,12 +79,13 @@ class Endboss extends MovableObject {
         }, 3000);
     }
 
-
+    /**
+     * Reduziert die Gesundheit des Endbosses, wenn er von einer Flasche getroffen wird.
+     */
     hitbottle() {
         this.health -= 33;
         if (this.health < 0) {
             this.health = 0;
         }
-        console.log('Endboss Gesundheit: ', this.health);
     }
 }
