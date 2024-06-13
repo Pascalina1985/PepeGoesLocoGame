@@ -22,6 +22,7 @@ let world;
  */
 let keyboard = new Keyboard();
 
+let clicked;
 /**
  * Initialisiert das Spiel.
  * 
@@ -32,6 +33,7 @@ function init() {
     world = new World(canvas, keyboard);
     game_sound = new Audio('audio/soundofgame.mp3'); // game_sound global zuweisen
     game_sound.play();
+    clicked = true;
 }
 
 /**
@@ -100,5 +102,11 @@ window.addEventListener("keyup", (event) => {
  * Pausiert alle Sounds im Spiel.
  */
 function pauseSounds() {
-    game_sound.pause();
+    if (clicked === true) {
+        game_sound.pause();
+        clicked = false;
+    } else {
+        game_sound.play();
+        clicked = true;
+    }
 }

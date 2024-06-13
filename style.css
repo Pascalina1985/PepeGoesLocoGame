@@ -32,7 +32,7 @@ body {
     margin: 0;
 }
 
-#music {
+.music {
     position: absolute;
     top: 170px;
     left: 360px;
@@ -44,9 +44,10 @@ body {
     padding-block: 0;
     padding-inline: 0;
     transition: transform 0.2s ease;
+    display: none;
 }
 
-#music:hover {
+.music:hover {
     cursor: pointer;
     transform: translateY(-2px);
 }
@@ -54,6 +55,7 @@ body {
 .soundpic {
     width: 50px;
     height: 50px;
+    display: none;
 }
 
 h1 {
@@ -106,7 +108,7 @@ canvas {
     .guide {
         display: none !important;
     }
-    #music {
+    .music {
         position: absolute;
         top: 20px;
         left: 360px;

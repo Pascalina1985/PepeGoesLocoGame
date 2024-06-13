@@ -40,7 +40,9 @@ class ThrowableObject extends MovableObject {
     splash() {
         clearInterval(this.throwInterval); // Stoppe die Bewegung der Flasche
         this.loadImages(world.endboss.IMAGE_SPLASH); // Lade die Spritzbilder
+        this.loadImages(world.endboss.IMAGE_DAMAGED);
         this.playAnimation(world.endboss.IMAGE_SPLASH); // Spiele die Spritzanimation ab
+        this.playAnimation(world.endboss.IMAGE_DAMAGED);
         setTimeout(() => {
             // Entferne die Flasche nach der Animation
             world.throwableObject = world.throwableObject.filter(obj => obj !== this);

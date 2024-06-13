@@ -169,18 +169,14 @@ class World {
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
-                if (this.character.y + this.character.height < enemy.y + enemy.height &&
-                    this.character.x + this.character.width > enemy.x &&
-                    this.character.x < enemy.x + enemy.width) {
-                    if (enemy instanceof Chicken || enemy instanceof ChickenSmall) {
+                if (this.character.isAboveGround()) {
+                    if ((enemy instanceof Chicken || enemy instanceof ChickenSmall) && !enemy.isDead) {
                         this.handleJumpingOnEnemy(enemy);
+                        enemy.isDead = true;
                         this.splash_sound.play();
-                        clearInterval(this.character.IMAGES_HURT);
                     }
-                } else {
-                    if (!this.isJumpingOnEnemy) {
-                        this.handleNormalCollision();
-                    }
+                } else if (!enemy.isDead) {
+                    this.handleNormalCollision();
                 }
             }
         });
@@ -289,7 +285,6 @@ class World {
         }
     }
 
-
     /**
      * Überprüft, ob eine geworfene Flasche den Endboss trifft und aktualisiert die Statusleiste entsprechend.
      */
@@ -315,18 +310,6 @@ class World {
             });
         }
     }
-
-    hitbottle() {
-        this.health -= 33;
-        // Starte die Damage-Animation des Endbosses
-        this.playAnimation(this.IMAGE_DAMAGED);
-
-        if (this.health < 0) {
-            this.health = 0;
-        }
-    }
-
-
 
     /**
      * Zeichnet den Spielbildschirm, aktualisiert die Objekte und führt Animationen durch.

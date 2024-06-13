@@ -52,7 +52,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGE_END);
         this.loadImages(this.IMAGE_SPLASH);
         this.x = 2500;
-        this.speed = 3.5;
+        this.speed = 7;
         this.animate();
     }
 
@@ -99,8 +99,8 @@ class Endboss extends MovableObject {
      */
     hitbottle() {
         this.health -= 33;
-        // Starte die Damage-Animation des Endbosses
         this.playAnimation(this.IMAGE_DAMAGED);
+        console.log(this.health);
 
         if (this.health < 0) {
             this.health = 0;

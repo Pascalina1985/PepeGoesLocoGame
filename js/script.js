@@ -25,6 +25,8 @@ let level1;
 function startGame() {
     document.getElementById('startScreenID').style.visibility = 'hidden';
     document.getElementById('startGameButton').style.visibility = 'hidden';
+    document.getElementById('pausebutton').style.display = 'block';
+    document.getElementById('pauseimg').style.display = 'block';
 
     level1 = new Level(
         [
