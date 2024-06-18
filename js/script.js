@@ -22,6 +22,10 @@ window.addEventListener('load', checkOrientation);
  */
 let level1;
 
+function restartGame() {
+    location.reload();
+}
+
 function startGame() {
     document.getElementById('startScreenID').style.visibility = 'hidden';
     document.getElementById('startGameButton').style.visibility = 'hidden';
@@ -33,7 +37,9 @@ function startGame() {
             new Chicken(),
             new Chicken(),
             new Chicken(),
+            new Chicken(),
             new Endboss(),
+            new ChickenSmall(),
             new ChickenSmall(),
             new ChickenSmall(),
             new ChickenSmall(),

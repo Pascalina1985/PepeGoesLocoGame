@@ -17,7 +17,7 @@ class Bottle extends MovableObject {
      * 
      * @type {number}
      */
-    height = 60;
+    height = 70;
 
     /**
      * Die Breite der Flasche.

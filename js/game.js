@@ -5,12 +5,6 @@
 let canvas;
 
 /**
- * Der Sound des Spiels.
- * @type {HTMLAudioElement}
- */
-let game_sound;
-
-/**
  * Die Welt des Spiels.
  * @type {World}
  */
@@ -22,7 +16,9 @@ let world;
  */
 let keyboard = new Keyboard();
 
-let clicked;
+let isSoundPaused = localStorage.getItem('isSoundPaused') === 'true';
+let game_sound; // Global zuweisen
+let shouldPlaySound = true; // Flag zur Steuerung des Sounds
 /**
  * Initialisiert das Spiel.
  * 
@@ -32,9 +28,14 @@ function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     game_sound = new Audio('audio/soundofgame.mp3'); // game_sound global zuweisen
-    game_sound.play();
-    clicked = true;
+    if (isSoundPaused) {
+        game_sound.pause();
+    } else {
+        game_sound.play();
+    }
 }
+
+
 
 /**
  * Reaktion auf Tastenereignisse beim Drücken.
@@ -101,12 +102,19 @@ window.addEventListener("keyup", (event) => {
 /**
  * Pausiert alle Sounds im Spiel.
  */
+/**
+ * Pausiert alle Sounds im Spiel.
+ */
 function pauseSounds() {
-    if (clicked === true) {
+    if (!isSoundPaused) {
+        document.getElementById('pausebutton').blur();
         game_sound.pause();
-        clicked = false;
+        isSoundPaused = true;
     } else {
+        document.getElementById('pausebutton').blur();
         game_sound.play();
-        clicked = true;
+        isSoundPaused = false;
     }
+    localStorage.setItem('isSoundPaused', isSoundPaused); // Speichere den Soundstatus im localStorage
+    shouldPlaySound = !isSoundPaused; // Aktualisiere das Flag
 }

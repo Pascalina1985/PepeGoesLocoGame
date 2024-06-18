@@ -122,6 +122,7 @@ class World {
      * @param {Keyboard} keyboard - Die Tastatur-Eingabe für das Spiel.
      */
     constructor(canvas, keyboard) {
+        this.collidedBottles = [];
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
@@ -160,6 +161,9 @@ class World {
             this.checkcharaktercoin();
             this.checkCollisionsEndbossCharacter();
         }, 200);
+        setInterval(() => {
+            this.checkCharacterJumpingOnEnemy();
+        }, 10);
     }
 
 
@@ -169,18 +173,24 @@ class World {
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
-                if (this.character.isAboveGround()) {
-                    if ((enemy instanceof Chicken || enemy instanceof ChickenSmall) && !enemy.isDead) {
-                        this.handleJumpingOnEnemy(enemy);
-                        enemy.isDead = true;
-                        this.splash_sound.play();
-                    }
-                } else if (!enemy.isDead) {
+                if (!this.character.isAboveGround() && !enemy.isDead) {
                     this.handleNormalCollision();
                 }
             }
         });
         this.removeHitEnemies();
+    }
+
+    checkCharacterJumpingOnEnemy() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy) && this.character.isAboveGround()) {
+                if ((enemy instanceof Chicken || enemy instanceof ChickenSmall) && !enemy.isDead) {
+                    this.handleJumpingOnEnemy(enemy);
+                    enemy.isDead = true;
+                    this.splash_sound.play();
+                }
+            }
+        });
     }
 
     /**
@@ -277,11 +287,13 @@ class World {
             if (this.collectedBottles.length === 0) {
 
                 setTimeout(() => {
-                    location.reload();
-                }, 1500);
-            }
-        } else {
+                    document.getElementById('losescreen').style.display = 'block';
+                }, 1000);
 
+                setTimeout(() => {
+                    location.reload();
+                }, 3000);
+            }
         }
     }
 
@@ -296,16 +308,12 @@ class World {
      */
     checkBottleEndbossCollision() {
         if (this.endboss) {
-            this.throwableObject.forEach((bottle, index) => {
-                if (bottle.isColliding(this.endboss)) {
-                    // Flasche trifft den Endboss
-                    bottle.splash(); // Starte die Splash-Animation der Flasche
-
-                    // Starte die Damage-Animation des Endbosses mit einer Verzögerung
-                    setTimeout(() => {
-                        this.endboss.hitbottle(); // Verletze den Endboss
-                        this.StatusBarEndboss.setPercentage(this.endboss.health);
-                    }, 200); // Passen Sie die Verzögerung nach Bedarf an
+            this.throwableObject.forEach((bottle) => {
+                if (bottle.isColliding(this.endboss) && !this.collidedBottles.includes(bottle)) {
+                    bottle.splash();
+                    this.collidedBottles.push(bottle); // Füge die Flasche zur Liste der kollidierten Flaschen hinzu
+                    this.endboss.hitbottle();
+                    this.StatusBarEndboss.setPercentage(this.endboss.health);
                 }
             });
         }

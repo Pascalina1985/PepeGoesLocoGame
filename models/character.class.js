@@ -83,6 +83,19 @@ class Character extends MovableObject {
         'img/2_character_pepe/4_hurt/H-43.png'
     ];
 
+    IMAGES_SLEEP = [
+        'img/2_character_pepe/1_idle/long_idle/I-11.png',
+        'img/2_character_pepe/1_idle/long_idle/I-12.png',
+        'img/2_character_pepe/1_idle/long_idle/I-13.png',
+        'img/2_character_pepe/1_idle/long_idle/I-14.png',
+        'img/2_character_pepe/1_idle/long_idle/I-15.png',
+        'img/2_character_pepe/1_idle/long_idle/I-16.png',
+        'img/2_character_pepe/1_idle/long_idle/I-17.png',
+        'img/2_character_pepe/1_idle/long_idle/I-18.png',
+        'img/2_character_pepe/1_idle/long_idle/I-19.png',
+        'img/2_character_pepe/1_idle/long_idle/I-20.png'
+    ];
+
     /**
      * Die Welt, in der sich der Charakter befindet.
      * 
@@ -129,9 +142,10 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_SLEEP);
         this.applyGravity();
         this.otherDirection = false;
-        this.animate();
+        this.setupIntervals();
     }
 
 
@@ -151,29 +165,44 @@ class Character extends MovableObject {
      * Wenn der Charakter in der Luft ist, wird eine Sprunganimation abgespielt.
      * Wenn der Charakter auf dem Boden ist und sich nach rechts oder links bewegt, wird eine Laufanimation abgespielt.
      */
-    animate() {
+
+    // Setup der Intervalle
+    setupIntervals() {
+        this.startMovementInterval();
+        this.startAnimationInterval();
+        this.startJumpingAnimationInterval();
+
+    }
+
+    // Intervall für die Bewegung und Grundlogik
+    startMovementInterval() {
         setInterval(() => {
-            this.walking_sound.pause();
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
-                this.walking_sound.play();
+                if (!isSoundPaused && game_sound.paused) game_sound.play();
             }
             if (this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
                 this.otherDirection = true;
-                this.walking_sound.play();
+                if (!isSoundPaused && game_sound.paused) game_sound.play();
             }
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
+                if (!isSoundPaused && game_sound.paused) game_sound.play();
             }
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
+    }
 
+
+    // Intervall für die Animationen außer Jumping und Schlafen
+    startAnimationInterval() {
         setInterval(() => {
             this.hurt_sound.pause();
             this.dead_sound.pause();
             this.chicken_sound.pause();
+
             if (this.isDead()) {
                 this.dead_sound.play();
                 this.playAnimation(this.IMAGES_DEAD);
@@ -185,14 +214,22 @@ class Character extends MovableObject {
                 this.hurt_sound.play();
                 this.chicken_sound.play();
                 this.playAnimation(this.IMAGES_HURT);
-            } else if (this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_JUMPING);
+            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.SPACE) {
+                this.playAnimation(this.IMAGES_WALKING);
+
             } else {
-                if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                    this.playAnimation(this.IMAGES_WALKING);
-                }
+                this.playAnimation(this.IMAGES_SLEEP);
             }
-        }, 50);
+        }, 100);
+    }
+
+    // Intervall für die Jumping-Animation
+    startJumpingAnimationInterval() {
+        setInterval(() => {
+            if (this.isAboveGround()) {
+                this.playAnimation(this.IMAGES_JUMPING);
+            }
+        }, 200);
     }
 
     /**

@@ -28,8 +28,16 @@ body {
     background-image: url('img/desert.png');
     font-family: 'Zabars', Arial, Helvetica, sans-serif;
     justify-content: center;
-    min-height: 100vh;
+    height: 100vh;
     margin: 0;
+}
+
+.restartButton {
+    display: none;
+}
+
+#losescreen {
+    display: none;
 }
 
 .music {
@@ -112,6 +120,14 @@ canvas {
         position: absolute;
         top: 20px;
         left: 360px;
+    }
+    .restartButton {
+        display: block !important;
+        font-family: 'Zabars', Arial, Helvetica, sans-serif;
+        width: 150px;
+        margin-top: 4px;
+        border-radius: 10%;
+        height: 24px;
     }
 }
 

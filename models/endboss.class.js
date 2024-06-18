@@ -6,7 +6,7 @@ class Endboss extends MovableObject {
     height = 400;
     width = 250;
     y = 60;
-    health = 100;
+    health = 132;
 
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
@@ -23,6 +23,12 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/5_dead/G24.png',
         'img/4_enemie_boss_chicken/5_dead/G25.png',
         'img/4_enemie_boss_chicken/5_dead/G26.png'
+    ];
+
+    IMAGE_HURT = [
+        'img/4_enemie_boss_chicken/4_hurt/G21.png',
+        'img/4_enemie_boss_chicken/4_hurt/G22.png',
+        'img/4_enemie_boss_chicken/4_hurt/G23.png'
     ];
 
     IMAGE_END = [
@@ -51,8 +57,9 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGE_DAMAGED);
         this.loadImages(this.IMAGE_END);
         this.loadImages(this.IMAGE_SPLASH);
+        this.loadImages(this.IMAGE_HURT);
         this.x = 2500;
-        this.speed = 7;
+        this.speed = 9;
         this.animate();
     }
 
@@ -69,16 +76,22 @@ class Endboss extends MovableObject {
 
         this.animationInterval = setInterval(() => {
             if (this.health < 35) {
-                this.playAnimation(this.IMAGE_DAMAGED);
-                this.bomb_sound.play();
-                clearInterval(this.movementInterval);
-                clearInterval(this.animationInterval);
-                setTimeout(() => {
-                    this.showEndScreen();
-                }, 3000);
+                this.playDamagedAnimation();
             }
-        }, 200);
+        }, 1700);
     }
+
+    // Neue Methode zur Verwaltung der beschädigten Animation
+    playDamagedAnimation() {
+        this.playAnimation(this.IMAGE_DAMAGED);
+        this.bomb_sound.play();
+        clearInterval(this.movementInterval);
+        clearInterval(this.animationInterval);
+        setTimeout(() => {
+            this.showEndScreen();
+        }, 3000);
+    }
+
 
     /**
      * Zeigt den Endbildschirm an.
@@ -99,9 +112,7 @@ class Endboss extends MovableObject {
      */
     hitbottle() {
         this.health -= 33;
-        this.playAnimation(this.IMAGE_DAMAGED);
-        console.log(this.health);
-
+        this.playAnimation(this.IMAGE_HURT);
         if (this.health < 0) {
             this.health = 0;
         }
