@@ -26,6 +26,8 @@ body {
     flex-direction: column;
     align-items: center;
     background-image: url('img/desert.png');
+    background-repeat: no-repeat;
+    background-size: cover;
     font-family: 'Zabars', Arial, Helvetica, sans-serif;
     justify-content: center;
     height: 100vh;
@@ -34,6 +36,11 @@ body {
 
 .restartButton {
     display: none;
+    font-family: 'Zabars', Arial, Helvetica, sans-serif;
+    width: 150px;
+    margin-top: 4px;
+    border-radius: 10%;
+    height: 24px;
 }
 
 #losescreen {

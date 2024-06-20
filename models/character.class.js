@@ -176,7 +176,7 @@ class Character extends MovableObject {
 
     // Intervall für die Bewegung und Grundlogik
     startMovementInterval() {
-        setInterval(() => {
+        this.MovementInterval = setInterval(() => {
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
@@ -195,38 +195,72 @@ class Character extends MovableObject {
         }, 1000 / 60);
     }
 
-
     // Intervall für die Animationen außer Jumping und Schlafen
+    sleeper = false;
+    sleepTimeout = null;
+
     startAnimationInterval() {
-        setInterval(() => {
+        this.animationInterval = setInterval(() => {
             this.hurt_sound.pause();
             this.dead_sound.pause();
             this.chicken_sound.pause();
 
             if (this.isDead()) {
                 this.dead_sound.play();
+                clearTimeout(this.sleepTimeout);
+                this.sleeper = false;
                 this.playAnimation(this.IMAGES_DEAD);
+                document.getElementById('losescreen').style.display = 'block';
+                this.stopAnimationIntervals();
                 setTimeout(() => {
                     this.dead_sound.currentTime = 0;
-                    location.reload();
                 }, 2700);
             } else if (this.isHurt()) {
                 this.hurt_sound.play();
                 this.chicken_sound.play();
+                this.sleeper = false;
                 this.playAnimation(this.IMAGES_HURT);
-            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.SPACE) {
+                clearTimeout(this.sleepTimeout);
+            } else if (this.world.keyboard.SPACE && this.isAboveGround()) {
+                this.sleeper = false;
+                clearTimeout(this.sleepTimeout);
+                this.playAnimation(this.IMAGES_JUMPING);
+            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+                this.sleeper = false;
+                clearTimeout(this.sleepTimeout);
                 this.playAnimation(this.IMAGES_WALKING);
-
-            } else {
-                this.playAnimation(this.IMAGES_SLEEP);
+            } else if (!this.isAboveGround()) {
+                if (!this.sleeper) {
+                    this.sleeper = true;
+                    this.sleepTimeout = setTimeout(() => {
+                        if (this.sleeper) {
+                            this.playAnimation(this.IMAGES_SLEEP);
+                            this.loopSleepAnimation();
+                        }
+                    }, 1000);
+                }
             }
         }, 100);
     }
 
-    // Intervall für die Jumping-Animation
+    stopAnimationIntervals() {
+        clearInterval(this.animationInterval);
+        clearInterval(this.MovementInterval);
+    }
+
+
+    loopSleepAnimation() {
+        if (this.sleeper) {
+            this.playAnimation(this.IMAGES_SLEEP);
+            setTimeout(() => this.loopSleepAnimation(), 100);
+        }
+    }
+
     startJumpingAnimationInterval() {
         setInterval(() => {
             if (this.isAboveGround()) {
+                this.sleeper = false;
+                clearTimeout(this.sleepTimeout);
                 this.playAnimation(this.IMAGES_JUMPING);
             }
         }, 200);

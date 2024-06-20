@@ -31,6 +31,7 @@ function startGame() {
     document.getElementById('startGameButton').style.visibility = 'hidden';
     document.getElementById('pausebutton').style.display = 'block';
     document.getElementById('pauseimg').style.display = 'block';
+    document.getElementById('restartButton').style.display = 'block';
 
     level1 = new Level(
         [

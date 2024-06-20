@@ -81,6 +81,7 @@ class Endboss extends MovableObject {
         }, 1700);
     }
 
+
     // Neue Methode zur Verwaltung der beschädigten Animation
     playDamagedAnimation() {
         this.playAnimation(this.IMAGE_DAMAGED);
@@ -100,7 +101,7 @@ class Endboss extends MovableObject {
         clearInterval(this.interval);
         this.loadImage(this.IMAGE_END[0]);
         setTimeout(() => {
-            location.reload();
+            //location.reload();
         }, 3000);
     }
 
