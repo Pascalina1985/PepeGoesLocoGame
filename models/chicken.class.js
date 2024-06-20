@@ -54,9 +54,14 @@ class Chicken extends MovableObject {
 
         this.animationInterval = setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING);
-            // this.chicken_sound.play();
         }, 200);
     }
+
+    stopAnimationIntervals() {
+        clearInterval(this.movementInterval);
+        clearInterval(this.animationInterval);
+    }
+
 
     /**
      * Stoppt die Bewegung des Hühnchens und spielt die Sterbe-Animation ab.

@@ -58,6 +58,11 @@ class ChickenSmall extends MovableObject {
         }, 200);
     }
 
+    stopAnimationIntervals() {
+        clearInterval(this.movementInterval);
+        clearInterval(this.animationInterval);
+    }
+
     /**
      * Stoppt die Bewegung des kleinen Hühnchens und spielt die tote Animation ab.
      */

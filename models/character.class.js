@@ -248,6 +248,8 @@ class Character extends MovableObject {
         clearInterval(this.animationInterval);
         clearInterval(this.MovementInterval);
         this.world.stopEndbossAnimations();
+        this.world.stopChickenAnimations();
+        this.world.stopChickenSmallAnimations();
     }
 
 

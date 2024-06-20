@@ -131,6 +131,8 @@ class World {
         this.draw();
         this.setWorld();
         this.endboss = this.getEndboss();
+        this.chicken = this.getChicken();
+        this.ChickenSmall = this.getCickenSmall();
         this.run();
     }
 
@@ -149,11 +151,36 @@ class World {
         return this.level.enemies.find(enemy => enemy instanceof Endboss);
     }
 
+    getChicken() {
+        return this.level.enemies.find(enemy => enemy instanceof Chicken);
+    }
+
+    getCickenSmall() {
+        return this.level.enemies.find(enemy => enemy instanceof ChickenSmall);
+    }
+
     stopEndbossAnimations() {
         if (this.endboss) {
             this.endboss.stopAnimationIntervals();
         }
     }
+
+    stopChickenAnimations() {
+        this.level.enemies.forEach(enemy => {
+            if (enemy instanceof Chicken) {
+                enemy.stopAnimationIntervals();
+            }
+        });
+    }
+
+    stopChickenSmallAnimations() {
+        this.level.enemies.forEach(enemy => {
+            if (enemy instanceof ChickenSmall) {
+                enemy.stopAnimationIntervals();
+            }
+        });
+    }
+
 
     /**
      * Startet das Spiel.
