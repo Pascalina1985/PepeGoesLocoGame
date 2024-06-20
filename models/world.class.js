@@ -149,6 +149,12 @@ class World {
         return this.level.enemies.find(enemy => enemy instanceof Endboss);
     }
 
+    stopEndbossAnimations() {
+        if (this.endboss) {
+            this.endboss.stopAnimationIntervals();
+        }
+    }
+
     /**
      * Startet das Spiel.
      */

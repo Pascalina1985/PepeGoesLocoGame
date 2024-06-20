@@ -166,6 +166,7 @@ class Character extends MovableObject {
      * Wenn der Charakter auf dem Boden ist und sich nach rechts oder links bewegt, wird eine Laufanimation abgespielt.
      */
 
+
     // Setup der Intervalle
     setupIntervals() {
         this.startMovementInterval();
@@ -246,6 +247,7 @@ class Character extends MovableObject {
     stopAnimationIntervals() {
         clearInterval(this.animationInterval);
         clearInterval(this.MovementInterval);
+        this.world.stopEndbossAnimations();
     }
 
 

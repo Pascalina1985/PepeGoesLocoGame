@@ -81,6 +81,11 @@ class Endboss extends MovableObject {
         }, 1700);
     }
 
+    stopAnimationIntervals() {
+        clearInterval(this.movementInterval);
+        clearInterval(this.animationInterval);
+    }
+
 
     // Neue Methode zur Verwaltung der beschädigten Animation
     playDamagedAnimation() {
