@@ -211,7 +211,7 @@ class Character extends MovableObject {
                 clearTimeout(this.sleepTimeout);
                 this.sleeper = false;
                 this.playAnimation(this.IMAGES_DEAD);
-                document.getElementById('losescreen').style.display = 'block';
+                document.getElementById('lostscreen').style.display = 'block';
                 this.stopAnimationIntervals();
                 setTimeout(() => {
                     this.dead_sound.currentTime = 0;
@@ -250,6 +250,11 @@ class Character extends MovableObject {
         this.world.stopEndbossAnimations();
         this.world.stopChickenAnimations();
         this.world.stopChickenSmallAnimations();
+    }
+
+    stopCharacterAnimation() {
+        clearInterval(this.animationInterval);
+        clearInterval(this.MovementInterval);
     }
 
 

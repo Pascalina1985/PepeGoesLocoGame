@@ -32,6 +32,8 @@ function startGame() {
     document.getElementById('pausebutton').style.display = 'block';
     document.getElementById('pauseimg').style.display = 'block';
     document.getElementById('restartButton').style.display = 'block';
+    document.getElementById('restartButton').classList.remove('remove');
+    document.getElementById('restartButton').classList.add('restartButton');
 
     level1 = new Level(
         [

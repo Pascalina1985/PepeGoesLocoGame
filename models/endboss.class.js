@@ -48,6 +48,8 @@ class Endboss extends MovableObject {
 
     bomb_sound = new Audio('audio/winnersound.mp3');
 
+    world;
+
     /**
      * Erzeugt eine neue Instanz des Endbosses.
      */
@@ -60,6 +62,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGE_HURT);
         this.x = 2500;
         this.speed = 9;
+        this.world = world;
         this.animate();
     }
 
@@ -95,7 +98,7 @@ class Endboss extends MovableObject {
         clearInterval(this.animationInterval);
         setTimeout(() => {
             this.showEndScreen();
-        }, 3000);
+        }, 1700);
     }
 
 
@@ -105,9 +108,11 @@ class Endboss extends MovableObject {
     showEndScreen() {
         clearInterval(this.interval);
         this.loadImage(this.IMAGE_END[0]);
-        setTimeout(() => {
-            //location.reload();
-        }, 3000);
+        console.log(this.world);
+        this.world.stopChickenAnimations();
+        this.world.stopChickenSmallAnimations();
+        this.world.character.stopCharacterAnimation();
+        document.getElementById('losescreen').style.display = 'block';
     }
 
     /**

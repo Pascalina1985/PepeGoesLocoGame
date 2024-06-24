@@ -34,6 +34,10 @@ body {
     margin: 0;
 }
 
+#lostscreen {
+    display: none;
+}
+
 .restartButton {
     display: none;
     font-family: 'Zabars', Arial, Helvetica, sans-serif;
@@ -129,13 +133,16 @@ canvas {
         left: 360px;
     }
     .restartButton {
-        display: block !important;
         font-family: 'Zabars', Arial, Helvetica, sans-serif;
         width: 150px;
         margin-top: 4px;
         border-radius: 10%;
         height: 24px;
     }
+}
+
+.remove {
+    display: none !important;
 }
 
 #fullscreen {

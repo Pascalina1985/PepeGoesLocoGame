@@ -90,7 +90,7 @@ class World {
      * Der Endboss des Levels.
      * @type {Endboss}
      */
-    endboss;
+    endboss = new Endboss();
 
     /**
      * Der Soundeffekt für das Sammeln einer Münze.
@@ -129,8 +129,8 @@ class World {
 
         // Starte das Spiel
         this.draw();
-        this.setWorld();
         this.endboss = this.getEndboss();
+        this.setWorld();
         this.chicken = this.getChicken();
         this.ChickenSmall = this.getCickenSmall();
         this.run();
@@ -141,6 +141,7 @@ class World {
      */
     setWorld() {
         this.character.world = this;
+        this.endboss.world = this;
     }
 
     /**
@@ -320,12 +321,13 @@ class World {
             if (this.collectedBottles.length === 0) {
 
                 setTimeout(() => {
-                    document.getElementById('losescreen').style.display = 'block';
+                    document.getElementById('lostscreen').style.display = 'block';
+                    this.stopEndbossAnimations();
+                    this.stopChickenAnimations();
+                    this.stopChickenSmallAnimations();
+                    this.character.stopCharacterAnimation();
                 }, 1000);
 
-                setTimeout(() => {
-                    location.reload();
-                }, 3000);
             }
         }
     }
