@@ -92,39 +92,21 @@ class World {
      */
     endboss = new Endboss();
 
-    /**
-     * Der Soundeffekt für das Sammeln einer Münze.
-     * @type {HTMLAudioElement}
-     */
-    coin_sound = new Audio('audio/coin.mp3');
-
-    /**
-     * Der Soundeffekt für das Sammeln einer Flasche.
-     * @type {HTMLAudioElement}
-     */
-    bottle_sound = new Audio('audio/bottlecollected2.mp3');
-
-    /**
-     * Der Soundeffekt für das "Yeah!"-Geräusch.
-     * @type {HTMLAudioElement}
-     */
-    yeah_sound = new Audio('audio/shoutingyeah.mp3');
-
-    /**
-     * Der Soundeffekt für das Spritzgeräusch.
-     * @type {HTMLAudioElement}
-     */
-    splash_sound = new Audio('audio/splash.mp3');
 
     /**
      * Erstellt eine Instanz der Spielwelt.
      * @param {HTMLCanvasElement} canvas - Das Canvas-Element, auf dem das Spiel gerendert wird.
      * @param {Keyboard} keyboard - Die Tastatur-Eingabe für das Spiel.
      */
-    constructor(canvas, keyboard) {
+    constructor(canvas, keyboard, splashSound, coinSound, bottleSound, yeahSound) {
         this.collidedBottles = [];
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
+        this.splash_sound = splashSound;
+        this.coin_sound = coinSound;
+        this.bottle_sound = bottleSound;
+        this.yeah_sound = yeahSound;
+        this.isSoundPaused = localStorage.getItem('isSoundPaused') === 'true';
         this.keyboard = keyboard;
 
         // Starte das Spiel
@@ -134,6 +116,10 @@ class World {
         this.chicken = this.getChicken();
         this.ChickenSmall = this.getCickenSmall();
         this.run();
+    }
+
+    updateSoundStatus(isPaused) {
+        this.isSoundPaused = isPaused;
     }
 
     /**
@@ -221,7 +207,9 @@ class World {
                 if ((enemy instanceof Chicken || enemy instanceof ChickenSmall) && !enemy.isDead) {
                     this.handleJumpingOnEnemy(enemy);
                     enemy.isDead = true;
-                    this.splash_sound.play();
+                    if (!this.isSoundPaused) { // Überprüfen, ob der Sound pausiert ist
+                        this.splash_sound.play();
+                    }
                 }
             }
         });
@@ -279,7 +267,9 @@ class World {
     checkcharacterbottle() {
         this.level.bottles = this.level.bottles.filter((bottle, index) => {
             if (!bottle.collected && this.character.isColliding(bottle)) {
-                this.bottle_sound.play();
+                if (!this.isSoundPaused) {
+                    this.bottle_sound.play();
+                }
                 bottle.collected = true;
                 this.collectedBottles.push(bottle);
                 this.StatusBarBottle.setPercentage(this.collectedBottles.length);
@@ -296,7 +286,9 @@ class World {
         const totalCoins = 8;
         this.level.coins = this.level.coins.filter((coin, index) => {
             if (!coin.collected && this.character.isColliding(coin)) {
-                this.coin_sound.play();
+                if (!this.isSoundPaused) {
+                    this.coin_sound.play();
+                }
                 coin.collected = true;
                 this.collectedCoins.push(coin);
                 const percentage = (this.collectedCoins.length / totalCoins) * 100;
@@ -312,7 +304,9 @@ class World {
      */
     checkThrowObjects() {
         if (this.keyboard.D && this.collectedBottles.length > 0) {
-            this.yeah_sound.play();
+            if (!this.isSoundPaused) {
+                this.yeah_sound.play();
+            }
             this.collectedBottles.pop();
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, !this.character.otherDirection);
             this.throwableObject.push(bottle);

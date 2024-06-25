@@ -18,6 +18,10 @@ let keyboard = new Keyboard();
 
 let isSoundPaused = localStorage.getItem('isSoundPaused') === 'true';
 let game_sound; // Global zuweisen
+let splash_sound;
+let coin_sound;
+let bottle_sound;
+let yeah_sound;
 let shouldPlaySound = true; // Flag zur Steuerung des Sounds
 /**
  * Initialisiert das Spiel.
@@ -26,12 +30,24 @@ let shouldPlaySound = true; // Flag zur Steuerung des Sounds
  */
 function init() {
     canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard);
     game_sound = new Audio('audio/soundofgame.mp3'); // game_sound global zuweisen
+    splash_sound = new Audio('audio/splash.mp3');
+    coin_sound = new Audio('audio/coin.mp3');
+    bottle_sound = new Audio('audio/bottlecollected2.mp3');
+    yeah_sound = new Audio('audio/shoutingyeah.mp3');
+    world = new World(canvas, keyboard, splash_sound, coin_sound, bottle_sound, yeah_sound);
     if (isSoundPaused) {
         game_sound.pause();
+        splash_sound.pause();
+        coin_sound.pause();
+        bottle_sound.pause();
+        yeah_sound.pause();
     } else {
         game_sound.play();
+        splash_sound.play();
+        coin_sound.play();
+        bottle_sound.play();
+        yeah_sound.play();
     }
 }
 
@@ -106,15 +122,21 @@ window.addEventListener("keyup", (event) => {
  * Pausiert alle Sounds im Spiel.
  */
 function pauseSounds() {
-    if (!isSoundPaused) {
-        document.getElementById('pausebutton').blur();
+    document.getElementById('pausebutton').blur(); // Beibehalten der blur Methode
+    isSoundPaused = !isSoundPaused;
+    localStorage.setItem('isSoundPaused', isSoundPaused);
+    if (isSoundPaused) {
         game_sound.pause();
-        isSoundPaused = true;
+        splash_sound.pause();
+        coin_sound.pause();
+        bottle_sound.pause();
+        yeah_sound.pause();
     } else {
-        document.getElementById('pausebutton').blur();
         game_sound.play();
-        isSoundPaused = false;
+        splash_sound.play();
+        coin_sound.play();
+        bottle_sound.play();
+        yeah_sound.play();
     }
-    localStorage.setItem('isSoundPaused', isSoundPaused); // Speichere den Soundstatus im localStorage
-    shouldPlaySound = !isSoundPaused; // Aktualisiere das Flag
+    world.updateSoundStatus(isSoundPaused); // Aktualisieren Sie den Soundstatus in der World-Klasse
 }
