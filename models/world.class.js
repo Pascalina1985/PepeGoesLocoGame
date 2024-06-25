@@ -98,7 +98,7 @@ class World {
      * @param {HTMLCanvasElement} canvas - Das Canvas-Element, auf dem das Spiel gerendert wird.
      * @param {Keyboard} keyboard - Die Tastatur-Eingabe für das Spiel.
      */
-    constructor(canvas, keyboard, splashSound, coinSound, bottleSound, yeahSound) {
+    constructor(canvas, keyboard, splashSound, coinSound, bottleSound, yeahSound, hurtSound, chickenSound) {
         this.collidedBottles = [];
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -106,6 +106,8 @@ class World {
         this.coin_sound = coinSound;
         this.bottle_sound = bottleSound;
         this.yeah_sound = yeahSound;
+        this.hurt_sound = hurtSound;
+        this.chicken_sound = chickenSound;
         this.isSoundPaused = localStorage.getItem('isSoundPaused') === 'true';
         this.keyboard = keyboard;
 
@@ -250,6 +252,10 @@ class World {
      */
     handleNormalCollision() {
         this.character.hit();
+        if (!this.isSoundPaused) {
+            this.hurt_sound.play();
+            this.chicken_sound.play();
+        }
         this.statusBar.setPercentage(this.character.energy);
     }
 

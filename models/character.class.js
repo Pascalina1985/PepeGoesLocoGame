@@ -110,12 +110,7 @@ class Character extends MovableObject {
      */
     walking_sound = new Audio('audio/walking.mp3');
 
-    /**
-     * Ein Audio-Objekt für den Verletzungssound des Charakters.
-     * 
-     * @type {Audio}
-     */
-    hurt_sound = new Audio('audio/hurt.mp3');
+
 
     /**
      * Ein Audio-Objekt für den Todessound des Charakters.
@@ -123,13 +118,6 @@ class Character extends MovableObject {
      * @type {Audio}
      */
     dead_sound = new Audio('audio/dead.mp3');
-
-    /**
-     * Ein Audio-Objekt für den Hühnersound des Charakters.
-     * 
-     * @type {Audio}
-     */
-    chicken_sound = new Audio('audio/chicken2.mp3');
 
     /**
      * Erzeugt einen neuen Charakter.
@@ -202,9 +190,7 @@ class Character extends MovableObject {
 
     startAnimationInterval() {
         this.animationInterval = setInterval(() => {
-            this.hurt_sound.pause();
             this.dead_sound.pause();
-            this.chicken_sound.pause();
 
             if (this.isDead()) {
                 this.dead_sound.play();
@@ -217,8 +203,6 @@ class Character extends MovableObject {
                     this.dead_sound.currentTime = 0;
                 }, 2700);
             } else if (this.isHurt()) {
-                this.hurt_sound.play();
-                this.chicken_sound.play();
                 this.sleeper = false;
                 this.playAnimation(this.IMAGES_HURT);
                 clearTimeout(this.sleepTimeout);
