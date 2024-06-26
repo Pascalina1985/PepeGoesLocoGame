@@ -24,6 +24,7 @@ let bottle_sound;
 let yeah_sound;
 let hurt_sound;
 let chicken_sound;
+let bomb_sound;
 let shouldPlaySound = true; // Flag zur Steuerung des Sounds
 /**
  * Initialisiert das Spiel.
@@ -39,7 +40,8 @@ function init() {
     yeah_sound = new Audio('audio/shoutingyeah.mp3');
     hurt_sound = new Audio('audio/hurt.mp3');
     chicken_sound = new Audio('audio/chicken2.mp3');
-    world = new World(canvas, keyboard, splash_sound, coin_sound, bottle_sound, yeah_sound, hurt_sound, chicken_sound);
+    bomb_sound = new Audio('audio/winnersound.mp3');
+    world = new World(canvas, keyboard, splash_sound, coin_sound, bottle_sound, yeah_sound, hurt_sound, chicken_sound, bomb_sound);
     if (isSoundPaused) {
         game_sound.pause();
         splash_sound.pause();
@@ -48,6 +50,7 @@ function init() {
         yeah_sound.pause();
         hurt_sound.pause();
         chicken_sound.pause();
+        bomb_sound.pause();
     } else {
         game_sound.play();
         splash_sound.play();
@@ -56,6 +59,7 @@ function init() {
         yeah_sound.play();
         hurt_sound.play();
         chicken_sound.play();
+        bomb_sound.play();
     }
 }
 
@@ -141,6 +145,7 @@ function pauseSounds() {
         yeah_sound.pause();
         hurt_sound.pause();
         chicken_sound.pause();
+        bomb_sound.pause();
     } else {
         game_sound.play();
         splash_sound.play();
@@ -149,6 +154,7 @@ function pauseSounds() {
         yeah_sound.play();
         hurt_sound.play();
         chicken_sound.play();
+        bomb_sound.play();
     }
     world.updateSoundStatus(isSoundPaused); // Aktualisieren Sie den Soundstatus in der World-Klasse
 }

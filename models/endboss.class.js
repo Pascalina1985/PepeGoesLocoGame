@@ -93,7 +93,10 @@ class Endboss extends MovableObject {
     // Neue Methode zur Verwaltung der beschädigten Animation
     playDamagedAnimation() {
         this.playAnimation(this.IMAGE_DAMAGED);
-        this.bomb_sound.play();
+        console.log(this.world);
+        if (!this.world.isSoundPaused) {
+            this.bomb_sound.play();
+        }
         clearInterval(this.movementInterval);
         clearInterval(this.animationInterval);
         setTimeout(() => {
