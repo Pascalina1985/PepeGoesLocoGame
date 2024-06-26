@@ -133,10 +133,17 @@ window.addEventListener("keyup", (event) => {
 /**
  * Pausiert alle Sounds im Spiel.
  */
+
+
 function pauseSounds() {
-    document.getElementById('pausebutton').blur(); // Beibehalten der blur Methode
-    isSoundPaused = !isSoundPaused;
-    localStorage.setItem('isSoundPaused', isSoundPaused);
+    document.getElementById('pausebutton').blur();
+    isSoundPaused = !isSoundPaused; // Wechsel des Sound-Status
+    localStorage.setItem('isSoundPaused', isSoundPaused); // Speichern des neuen Status in localStorage
+    if (isSoundPaused) {
+        document.getElementById('pauseimg').src = 'img/soundoff.png';
+    } else if (!isSoundPaused) {
+        document.getElementById('pauseimg').src = 'img/sound.png';
+    }
     if (isSoundPaused) {
         game_sound.pause();
         splash_sound.pause();
@@ -156,5 +163,6 @@ function pauseSounds() {
         chicken_sound.play();
         bomb_sound.play();
     }
+
     world.updateSoundStatus(isSoundPaused); // Aktualisieren Sie den Soundstatus in der World-Klasse
 }

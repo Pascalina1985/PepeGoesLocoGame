@@ -34,6 +34,13 @@ function startGame() {
     document.getElementById('restartButton').style.display = 'block';
     document.getElementById('restartButton').classList.remove('remove');
     document.getElementById('restartButton').classList.add('restartButton');
+    localStorage.getItem('isSoundPaused', isSoundPaused);
+    if (isSoundPaused) {
+        document.getElementById('pauseimg').src = 'img/soundoff.png';
+    } else if (!isSoundPaused) {
+        document.getElementById('pauseimg').src = 'img/sound.png';
+    };
+
 
     level1 = new Level(
         [
