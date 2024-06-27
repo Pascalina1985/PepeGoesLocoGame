@@ -93,7 +93,7 @@ class Endboss extends MovableObject {
             if (this.health < 35) {
                 this.playDamagedAnimation();
             }
-        }, 1000 / 25);
+        }, 300);
     }
 
 
@@ -110,8 +110,9 @@ class Endboss extends MovableObject {
             this.bomb_sound.play();
         }
         clearInterval(this.movementInterval);
-        clearInterval(this.animationInterval);
+
         setTimeout(() => {
+            clearInterval(this.animationInterval);
             this.showEndScreen();
         }, 1700);
     }

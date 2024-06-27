@@ -68,10 +68,7 @@ class Chicken extends MovableObject {
      */
     die() {
         clearInterval(this.movementInterval);
+        clearInterval(this.animationInterval);
         this.playAnimation(this.IMAGES_CHICKEN_DEAD);
-
-        setTimeout(() => {
-            clearInterval(this.animationInterval);
-        }, 200);
     }
 }

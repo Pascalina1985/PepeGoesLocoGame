@@ -247,8 +247,9 @@ class World {
         setTimeout(() => {
             this.hitenemies.push(enemy); // Gegner zum Entfernen markieren
             this.removeHitEnemies(); // Gegner entfernen
-        }, 100); // Zeit für die Todesanimation
+        }, 800); // Zeit für die Todesanimation
     }
+
 
     /**
      * Behandelt eine normale Kollision des Charakters mit einem Feind.
