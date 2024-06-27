@@ -45,6 +45,17 @@ class Endboss extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png'
     ];
 
+    IMAGE_ANGRY = [
+        'img/4_enemie_boss_chicken/3_attack/G13.png',
+        'img/4_enemie_boss_chicken/3_attack/G14.png',
+        'img/4_enemie_boss_chicken/3_attack/G15.png',
+        'img/4_enemie_boss_chicken/3_attack/G16.png',
+        'img/4_enemie_boss_chicken/3_attack/G17.png',
+        'img/4_enemie_boss_chicken/3_attack/G18.png',
+        'img/4_enemie_boss_chicken/3_attack/G19.png',
+        'img/4_enemie_boss_chicken/3_attack/G18.png'
+    ];
+
 
     bomb_sound = new Audio('audio/winnersound.mp3');
 
@@ -60,6 +71,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGE_END);
         this.loadImages(this.IMAGE_SPLASH);
         this.loadImages(this.IMAGE_HURT);
+        this.loadImages(this.IMAGE_ANGRY);
         this.x = 2500;
         this.speed = 9;
         this.world = world;
@@ -73,7 +85,7 @@ class Endboss extends MovableObject {
         this.movementInterval = setInterval(() => {
             if (this.health >= 35) {
                 this.moveLeft();
-                this.playAnimation(this.IMAGES_WALKING);
+                this.playAnimation(this.IMAGE_ANGRY);
             }
         }, 1000 / 10);
 
@@ -84,6 +96,7 @@ class Endboss extends MovableObject {
         }, 1000 / 25);
     }
 
+
     stopAnimationIntervals() {
         clearInterval(this.movementInterval);
         clearInterval(this.animationInterval);
@@ -93,7 +106,6 @@ class Endboss extends MovableObject {
     // Neue Methode zur Verwaltung der beschädigten Animation
     playDamagedAnimation() {
         this.playAnimation(this.IMAGE_DAMAGED);
-        console.log(this.world);
         if (!this.world.isSoundPaused) {
             this.bomb_sound.play();
         }
@@ -111,7 +123,6 @@ class Endboss extends MovableObject {
     showEndScreen() {
         clearInterval(this.interval);
         this.loadImage(this.IMAGE_END[0]);
-        console.log(this.world);
         this.world.stopChickenAnimations();
         this.world.stopChickenSmallAnimations();
         this.world.character.stopCharacterAnimation();
