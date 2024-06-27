@@ -98,7 +98,7 @@ class World {
      * @param {HTMLCanvasElement} canvas - Das Canvas-Element, auf dem das Spiel gerendert wird.
      * @param {Keyboard} keyboard - Die Tastatur-Eingabe für das Spiel.
      */
-    constructor(canvas, keyboard, splashSound, coinSound, bottleSound, yeahSound, hurtSound, chickenSound, bombSound, deadSound) {
+    constructor(canvas, keyboard, splashSound, coinSound, bottleSound, yeahSound, hurtSound, chickenSound, bombSound, deadSound, gameSound) {
         this.collidedBottles = [];
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -110,6 +110,7 @@ class World {
         this.chicken_sound = chickenSound;
         this.bomb_sound = bombSound;
         this.dead_sound = deadSound;
+        this.game_sound = gameSound;
         this.isSoundPaused = localStorage.getItem('isSoundPaused') === 'true';
         this.keyboard = keyboard;
 
@@ -258,6 +259,8 @@ class World {
             if (!this.character.isDead()) { // Überprüfe, ob der Charakter nicht tot ist
                 this.chicken_sound.play();
                 this.hurt_sound.play();
+            } else if (this.character.isDead()) {
+                this.game_sound.pause();
             }
         }
         this.statusBar.setPercentage(this.character.energy);

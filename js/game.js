@@ -43,7 +43,7 @@ function init() {
     chicken_sound = new Audio('audio/chicken2.mp3');
     bomb_sound = new Audio('audio/winnersound.mp3');
     dead_sound = new Audio('audio/dead.mp3');
-    world = new World(canvas, keyboard, splash_sound, coin_sound, bottle_sound, yeah_sound, hurt_sound, chicken_sound, bomb_sound, dead_sound);
+    world = new World(canvas, keyboard, splash_sound, coin_sound, bottle_sound, yeah_sound, hurt_sound, chicken_sound, bomb_sound, dead_sound, game_sound);
     if (isSoundPaused) {
         game_sound.pause();
         splash_sound.pause();
