@@ -98,7 +98,7 @@ class World {
      * @param {HTMLCanvasElement} canvas - Das Canvas-Element, auf dem das Spiel gerendert wird.
      * @param {Keyboard} keyboard - Die Tastatur-Eingabe für das Spiel.
      */
-    constructor(canvas, keyboard, splashSound, coinSound, bottleSound, yeahSound, hurtSound, chickenSound, bombSound) {
+    constructor(canvas, keyboard, splashSound, coinSound, bottleSound, yeahSound, hurtSound, chickenSound, bombSound, deadSound) {
         this.collidedBottles = [];
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -109,9 +109,8 @@ class World {
         this.hurt_sound = hurtSound;
         this.chicken_sound = chickenSound;
         this.bomb_sound = bombSound;
+        this.dead_sound = deadSound;
         this.isSoundPaused = localStorage.getItem('isSoundPaused') === 'true';
-        console.log(this.bomb_sound);
-        console.log(this.isSoundPaused);
         this.keyboard = keyboard;
 
         // Starte das Spiel
@@ -256,11 +255,14 @@ class World {
     handleNormalCollision() {
         this.character.hit();
         if (!this.isSoundPaused) {
-            this.hurt_sound.play();
-            this.chicken_sound.play();
+            if (!this.character.isDead()) { // Überprüfe, ob der Charakter nicht tot ist
+                this.chicken_sound.play();
+                this.hurt_sound.play();
+            }
         }
         this.statusBar.setPercentage(this.character.energy);
     }
+
 
     /**
      * Entfernt die getroffenen Feinde aus der Liste der Feinde des Levels.

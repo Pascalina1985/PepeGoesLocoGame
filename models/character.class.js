@@ -111,14 +111,6 @@ class Character extends MovableObject {
     walking_sound = new Audio('audio/walking.mp3');
 
 
-
-    /**
-     * Ein Audio-Objekt für den Todessound des Charakters.
-     * 
-     * @type {Audio}
-     */
-    dead_sound = new Audio('audio/dead.mp3');
-
     /**
      * Erzeugt einen neuen Charakter.
      * 
@@ -190,18 +182,20 @@ class Character extends MovableObject {
 
     startAnimationInterval() {
         this.animationInterval = setInterval(() => {
-            this.dead_sound.pause();
-
             if (this.isDead()) {
-                this.dead_sound.play();
+                this.world.chicken_sound.pause();
+                if (!this.world.isSoundPaused) {
+                    this.world.dead_sound.play();
+                }
                 clearTimeout(this.sleepTimeout);
                 this.sleeper = false;
                 this.playAnimation(this.IMAGES_DEAD);
                 document.getElementById('lostscreen').style.display = 'block';
                 this.stopAnimationIntervals();
                 setTimeout(() => {
-                    this.dead_sound.currentTime = 0;
+                    this.world.dead_sound.currentTime = 0;
                 }, 2700);
+                this.world.characterIsDead = true;
             } else if (this.isHurt()) {
                 this.sleeper = false;
                 this.playAnimation(this.IMAGES_HURT);
