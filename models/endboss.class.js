@@ -75,13 +75,13 @@ class Endboss extends MovableObject {
                 this.moveLeft();
                 this.playAnimation(this.IMAGES_WALKING);
             }
-        }, 100);
+        }, 1000 / 10);
 
         this.animationInterval = setInterval(() => {
             if (this.health < 35) {
                 this.playDamagedAnimation();
             }
-        }, 1700);
+        }, 1000 / 25);
     }
 
     stopAnimationIntervals() {
