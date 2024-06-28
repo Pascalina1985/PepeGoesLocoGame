@@ -89,6 +89,7 @@ class Endboss extends MovableObject {
             }
         }, 1000 / 10);
 
+
         this.animationInterval = setInterval(() => {
             if (this.health < 35) {
                 this.playDamagedAnimation();
@@ -128,6 +129,7 @@ class Endboss extends MovableObject {
         this.world.stopChickenSmallAnimations();
         this.world.character.stopCharacterAnimation();
         document.getElementById('losescreen').style.display = 'block';
+        this.world.game_sound.pause();
     }
 
     /**

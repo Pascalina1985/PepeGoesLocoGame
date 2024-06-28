@@ -56,14 +56,6 @@ function init() {
         dead_sound.pause();
     } else {
         game_sound.play();
-        splash_sound.play();
-        coin_sound.play();
-        bottle_sound.play();
-        yeah_sound.play();
-        hurt_sound.play();
-        chicken_sound.play();
-        bomb_sound.play();
-        dead_sound.play();
     }
 }
 
@@ -160,14 +152,6 @@ function pauseSounds() {
         dead_sound.pause();
     } else {
         game_sound.play();
-        splash_sound.play();
-        coin_sound.play();
-        bottle_sound.play();
-        yeah_sound.play();
-        hurt_sound.play();
-        chicken_sound.play();
-        bomb_sound.play();
-        dead_sound.play();
     }
 
     world.updateSoundStatus(isSoundPaused); // Aktualisieren Sie den Soundstatus in der World-Klasse

@@ -208,11 +208,11 @@ class World {
 
     checkCharacterJumpingOnEnemy() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && this.character.isAboveGround()) {
-                if ((enemy instanceof Chicken || enemy instanceof ChickenSmall) && !enemy.isDead) {
+            if (this.character.isColliding(enemy) && this.character.isAboveGround() && this.character.speedY < 0) {
+                if ((enemy instanceof Chicken || enemy instanceof ChickenSmall) && !enemy.isDead && enemy.width / 2 < this.character.x) {
                     this.handleJumpingOnEnemy(enemy);
                     enemy.isDead = true;
-                    if (!this.isSoundPaused) { // Überprüfen, ob der Sound pausiert ist
+                    if (!this.isSoundPaused) {
                         this.splash_sound.play();
                     }
                 }
@@ -335,8 +335,10 @@ class World {
                     this.stopChickenAnimations();
                     this.stopChickenSmallAnimations();
                     this.character.stopCharacterAnimation();
+                    if (!this.isSoundPaused) {
+                        this.game_sound.pause();
+                    }
                 }, 1000);
-
             }
         }
     }
