@@ -86,6 +86,9 @@ class Endboss extends MovableObject {
             if (this.health >= 35) {
                 this.moveLeft();
                 this.playAnimation(this.IMAGE_ANGRY);
+                if (this.x < world.character.x) {
+                    this.x = world.character.x;
+                }
             }
         }, 1000 / 10);
 
@@ -139,8 +142,8 @@ class Endboss extends MovableObject {
      * Reduziert die Gesundheit des Endbosses, wenn er von einer Flasche getroffen wird.
      */
     hitbottle() {
-        this.health -= 33;
         this.playAnimation(this.IMAGE_HURT);
+        this.health -= 33;
         if (this.health < 0) {
             this.health = 0;
         }

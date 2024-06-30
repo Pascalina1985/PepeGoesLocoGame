@@ -357,8 +357,8 @@ class World {
             this.throwableObject.forEach((bottle) => {
                 if (bottle.isColliding(this.endboss) && !this.collidedBottles.includes(bottle)) {
                     bottle.splash();
-                    this.collidedBottles.push(bottle); // Füge die Flasche zur Liste der kollidierten Flaschen hinzu
                     this.endboss.hitbottle();
+                    this.collidedBottles.push(bottle); // Füge die Flasche zur Liste der kollidierten Flaschen hinzu
                     this.StatusBarEndboss.setPercentage(this.endboss.health);
                 }
             });

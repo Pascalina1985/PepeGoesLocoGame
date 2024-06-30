@@ -3,9 +3,9 @@
  * @extends MovableObject
  */
 class ChickenSmall extends MovableObject {
-    y = 360;
-    height = 80;
-    width = 80;
+    y = 380;
+    height = 60;
+    width = 60;
 
     /**
      * Array von Bildpfaden für die Geh-Animation des kleinen Hühnchens.
@@ -40,7 +40,7 @@ class ChickenSmall extends MovableObject {
         this.loadImages(this.IMAGES_SMALLWALKING);
         this.loadImages(this.IMAGES_CHICKENSMALL_DEAD);
         this.x = 200 + Math.random() * 3000;
-        this.speed = 0.15 + Math.random() * 0.5; // Math.random() generiert eine zufällige Zahl zwischen 0 und 1
+        this.speed = 0.9 + Math.random() * 0.5; // Math.random() generiert eine zufällige Zahl zwischen 0 und 1
         this.animate();
     }
 
