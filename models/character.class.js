@@ -216,7 +216,7 @@ class Character extends MovableObject {
                             this.playAnimation(this.IMAGES_SLEEP);
                             this.loopSleepAnimation();
                         }
-                    }, 1000);
+                    }, 1500);
                 }
             }
         }, 100);

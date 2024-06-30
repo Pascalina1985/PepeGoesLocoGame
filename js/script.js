@@ -91,8 +91,6 @@ function startGame() {
             new Coin(),
             new Coin(),
             new Coin(),
-            new Coin(),
-            new Coin(),
             new Coin()
         ]
     );

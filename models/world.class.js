@@ -298,7 +298,7 @@ class World {
      * Überprüft, ob der Charakter eine Münze sammelt, und aktualisiert entsprechend die Statusleiste.
      */
     checkcharaktercoin() {
-        const totalCoins = 8;
+        const totalCoins = 6;
         this.level.coins = this.level.coins.filter((coin, index) => {
             if (!coin.collected && this.character.isColliding(coin)) {
                 if (!this.isSoundPaused) {
