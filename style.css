@@ -3,21 +3,30 @@
     src: url('fonts/Zabars.ttf') format('truetype');
 }
 
-@media screen and (orientation: portrait) {
+@media screen and (max-width: 400px) and (orientation: portrait) {
     #gameCanvas {
-        display: none;
+        display: none !important;
     }
     #rotate-device {
-        display: block;
+        display: block !important;
     }
 }
 
-@media screen and (orientation: landscape) {
+@media screen and (max-width: 400px) and (orientation: landscape) {
     #gameCanvas {
-        display: block;
+        display: block !important;
     }
     #rotate-device {
-        display: none;
+        display: none !important;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    #gameCanvas {
+        display: block !important;
+    }
+    #rotate-device {
+        display: none !important;
     }
 }
 
