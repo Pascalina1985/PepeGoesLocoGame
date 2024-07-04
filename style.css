@@ -19,12 +19,6 @@
         color: white;
         border-radius: 50% !important;
     }
-    .restartButton:hover,
-    .restartButton:active {
-        cursor: pointer;
-        touch-action: pan-x;
-        width: 300px;
-    }
     #startGameButton {
         width: 120px !important;
         height: 60px !important;
@@ -32,6 +26,14 @@
     .btn-background {
         width: 22px !important;
         height: 22px !important;
+    }
+    .music {
+        width: 35px !important;
+        height: 35px !important;
+    }
+    .soundpic {
+        width: 35px !important;
+        height: 35px !important;
     }
 }
 

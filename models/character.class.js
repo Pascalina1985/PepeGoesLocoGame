@@ -183,44 +183,65 @@ class Character extends MovableObject {
     startAnimationInterval() {
         this.animationInterval = setInterval(() => {
             if (this.isDead()) {
-                this.world.chicken_sound.pause();
-                if (!this.world.isSoundPaused) {
-                    this.world.dead_sound.play();
-                }
-                clearTimeout(this.sleepTimeout);
-                this.sleeper = false;
-                this.playAnimation(this.IMAGES_DEAD);
-                document.getElementById('lostscreen').style.display = 'block';
-                this.stopAnimationIntervals();
-                setTimeout(() => {
-                    this.world.dead_sound.currentTime = 0;
-                }, 2700);
-                this.world.characterIsDead = true;
+                this.handleDeadState();
             } else if (this.isHurt()) {
-                this.sleeper = false;
-                this.playAnimation(this.IMAGES_HURT);
-                clearTimeout(this.sleepTimeout);
+                this.handleHurtState();
             } else if (this.world.keyboard.SPACE && this.isAboveGround()) {
-                this.sleeper = false;
-                clearTimeout(this.sleepTimeout);
-                this.playAnimation(this.IMAGES_JUMPING);
+                this.handleJumpState();
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                this.sleeper = false;
-                clearTimeout(this.sleepTimeout);
-                this.playAnimation(this.IMAGES_WALKING);
+                this.handleWalkState();
             } else if (!this.isAboveGround()) {
-                if (!this.sleeper) {
-                    this.sleeper = true;
-                    this.sleepTimeout = setTimeout(() => {
-                        if (this.sleeper) {
-                            this.playAnimation(this.IMAGES_SLEEP);
-                            this.loopSleepAnimation();
-                        }
-                    }, 1500);
-                }
+                this.handleSleepState();
             }
         }, 100);
     }
+
+    handleDeadState() {
+        this.world.chicken_sound.pause();
+        if (!this.world.isSoundPaused) {
+            this.world.dead_sound.play();
+        }
+        clearTimeout(this.sleepTimeout);
+        this.sleeper = false;
+        this.playAnimation(this.IMAGES_DEAD);
+        document.getElementById('lostscreen').style.display = 'block';
+        this.stopAnimationIntervals();
+        setTimeout(() => {
+            this.world.dead_sound.currentTime = 0;
+        }, 2700);
+        this.world.characterIsDead = true;
+    }
+
+    handleHurtState() {
+        this.sleeper = false;
+        this.playAnimation(this.IMAGES_HURT);
+        clearTimeout(this.sleepTimeout);
+    }
+
+    handleJumpState() {
+        this.sleeper = false;
+        clearTimeout(this.sleepTimeout);
+        this.playAnimation(this.IMAGES_JUMPING);
+    }
+
+    handleWalkState() {
+        this.sleeper = false;
+        clearTimeout(this.sleepTimeout);
+        this.playAnimation(this.IMAGES_WALKING);
+    }
+
+    handleSleepState() {
+        if (!this.sleeper) {
+            this.sleeper = true;
+            this.sleepTimeout = setTimeout(() => {
+                if (this.sleeper) {
+                    this.playAnimation(this.IMAGES_SLEEP);
+                    this.loopSleepAnimation();
+                }
+            }, 1500);
+        }
+    }
+
 
     stopAnimationIntervals() {
         clearInterval(this.animationInterval);
